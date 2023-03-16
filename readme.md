@@ -1,5 +1,10 @@
 # React Pinball
 
+> **warning**
+> If you run this code as-is while connected to FAST hardware, it will send commands that could damage your hardware.
+> This is because your hardware isn't the same as mine, so it could send commands that will configure or
+> trigger the wrong coils in the wrong ways, which could start a fire or cause serious injury including death.
+
 ## Get Started
 
 ### Install NodeJS with NPM
