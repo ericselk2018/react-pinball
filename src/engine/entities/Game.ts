@@ -35,4 +35,5 @@ export default interface Game {
 	enableOrDisableFlippers: (args: { enable: boolean }) => void;
 	tapCoil: (args: { coil: Coil }) => void;
 	startTurn: () => void;
+	startNextGame: () => void;
 }

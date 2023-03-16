@@ -53,8 +53,17 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		return currentModeStep;
 	};
 
+	const startNextGame = () => {
+		game.players.forEach((player) => {
+			player.ballsUsed = 0;
+			player.ballsTotal = startingBallsPerPlayer;
+			player.score = 0;
+		});
+	};
+
 	const history: string[] = [];
 	const game: Game = {
+		startNextGame,
 		log: (message) => history.push(message),
 		history,
 		kickersWithBalls: [],
