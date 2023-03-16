@@ -4,7 +4,7 @@
 
 ### Install NodeJS with NPM
 
-NodeJS and NPM required, [https://nodejs.org/en/download](download here).
+NodeJS and NPM required, [download here](https://nodejs.org/en/download).
 
 ### Install NPM Packages and Run Webpack Dev Server
 
@@ -29,7 +29,7 @@ The first time you will need to tell Chrome that this site is allowed to connect
 window.onclick = () => {navigator.serial.requestPort({filters: [{usbVendorId: 11914, usbProductId: 4155}]})}
 ```
 
-Then click anywhere in the browser window. A prompt should open asking you to select a port. Make sure you have [https://fastpinball.com/docs/](figured out which one is the NET processor) (usually the one with the lowest number, but not always) and select that one. Now reload the page (F5).
+Then click anywhere in the browser window. A prompt should open asking you to select a port. Make sure you have [figured out which one is the NET processor](https://fastpinball.com/docs/) (usually the one with the lowest number, but not always) and select that one. Now reload the page (F5).
 
 ### All Done!
 
