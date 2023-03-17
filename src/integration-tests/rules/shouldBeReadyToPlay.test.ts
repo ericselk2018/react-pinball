@@ -12,7 +12,6 @@ describe('rules', () => {
 			credits: 0,
 			currentMode: modes[0],
 			currentModeStep: undefined,
-			currentModeStepButtonsCompleted: [],
 			currentPlayer: {
 				ballsTotal: 0,
 				ballsUsed: 0,

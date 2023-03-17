@@ -89,7 +89,6 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		log: (message) => history.push(message),
 		history,
 		kickersWithBalls: [],
-		currentModeStepButtonsCompleted: [],
 		get currentModeStep() {
 			return getCurrentModeStep();
 		},

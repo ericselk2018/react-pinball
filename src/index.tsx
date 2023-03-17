@@ -24,9 +24,22 @@ const App = () => {
 	});
 
 	if (game) {
-		const { status, currentMode, players, selected } = game;
+		const {
+			status,
+			currentMode,
+			players,
+			selected,
+			error,
+			currentPlayer,
+			currentModeStep,
+			ballsInPlay,
+			kickersWithBalls,
+			modeStepButtonsHitThisTurn,
+			pressedButton,
+			unpressedButton,
+		} = game;
 		if (status === 'starting') {
-			return <div>Starting...</div>;
+			return <div>Starting...{error}</div>;
 		}
 		if (status === 'gameOver') {
 			return <div>Game Over</div>;
@@ -36,7 +49,11 @@ const App = () => {
 		}
 		if (status === 'readyToPlay') {
 			if (selected === Selected.numberOfPlayers) {
-				return <div>Number of Players: {players.length}</div>;
+				return (
+					<div>
+						Number of Players: {players.length} {players.map((player) => player.initials).join(', ')}
+					</div>
+				);
 			}
 			const selectedPlayerIndex = Math.floor(selected / initialsLength);
 			const selectedPlayer = players[selectedPlayerIndex];
@@ -45,7 +62,60 @@ const App = () => {
 			return <Blink blinking={true} text={initials} blinkingLetter={selectedInitialIndex} />;
 		}
 		if (status === 'waitingForNextPlayer') {
-			return <div>Waiting For Next Player</div>;
+			return <div>Waiting For Next Player: {currentPlayer.initials}</div>;
+		}
+		if (status === 'playing') {
+			return (
+				<div>
+					<table>
+						<tbody>
+							<tr>
+								<td>Current Player</td>
+								<td>{currentPlayer.initials}</td>
+							</tr>
+							<tr>
+								<td>Current Player Balls</td>
+								<td>
+									{currentPlayer.ballsUsed} / {currentPlayer.ballsTotal}
+								</td>
+							</tr>
+							<tr>
+								<td>Current Player Score</td>
+								<td>{currentPlayer.score}</td>
+							</tr>
+							<tr>
+								<td>Current Mode</td>
+								<td>{currentMode.name}</td>
+							</tr>
+							<tr>
+								<td>Current Mode Step</td>
+								<td>{currentModeStep?.name}</td>
+							</tr>
+							<tr>
+								<td>Balls in Play</td>
+								<td>{ballsInPlay}</td>
+							</tr>
+							<tr>
+								<td>Kickers with Balls</td>
+								<td>{kickersWithBalls.map((kicker) => kicker.button.name).join(', ')}</td>
+							</tr>
+							<tr>
+								<td>Mode Step Buttons Hit This Turn</td>
+								<td>{modeStepButtonsHitThisTurn.map((button) => button.name).join(', ')}</td>
+							</tr>
+							<tr>
+								<td>Pressed Button</td>
+								<td>{pressedButton?.name}</td>
+							</tr>
+							<tr>
+								<td>Unpressed Button</td>
+								<td>{unpressedButton?.name}</td>
+							</tr>
+						</tbody>
+					</table>
+					<pre>{JSON.stringify(game, undefined, '\t')}</pre>
+				</div>
+			);
 		}
 	}
 
