@@ -2,7 +2,7 @@ import { lastTroughButton } from '@/engine/const/buttons/buttons';
 import Rule from '@/engine/entities/Rule';
 import ballSave from './ball-save/ball-save';
 import gameOver from './game-over/game-over';
-import waitingForNextPlayer from './waiting-for-next-player/waiting-for-next-player';
+import nextPlayer from './next-player/next-player';
 
 // A collection or rules that run when the last ball in play is drained.
 // Nested rules used here because they need to run conditionally based on the result of a previous rule.
@@ -18,8 +18,10 @@ const drainLastBall: Rule = ({ game }) => {
 
 	const ballSaved = ballSave({ game });
 	if (!ballSaved) {
-		waitingForNextPlayer({ game });
-		gameOver({ game });
+		const isGameOver = gameOver({ game });
+		if (!isGameOver) {
+			nextPlayer({ game });
+		}
 	}
 };
 

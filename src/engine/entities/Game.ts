@@ -29,6 +29,7 @@ export default interface Game {
 	currentPlayer: Player;
 	pressedButtons: Button[];
 	pressedButton: Button | undefined;
+	unpressedButton: Button | undefined;
 	buttonsPressedThisTurn: Button[];
 	modeStepButtonsHitThisTurn: Button[];
 	kickersWithBalls: Kicker[];
@@ -36,4 +37,5 @@ export default interface Game {
 	tapCoil: (args: { coil: Coil }) => void;
 	startTurn: () => void;
 	startNextGame: () => void;
+	nextPlayer: () => void;
 }

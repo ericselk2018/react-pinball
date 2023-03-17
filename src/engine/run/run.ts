@@ -27,11 +27,16 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		game.modeStepButtonsHitThisTurn.length = 0;
 	};
 
-	const player: Player = {
+	const player1: Player = {
 		score: 0,
 		ballsTotal: startingBallsPerPlayer,
 		ballsUsed: 0,
 		initials: 'AAA',
+	};
+
+	const player2: Player = {
+		...player1,
+		initials: 'BBB',
 	};
 
 	const getCurrentModeStep = () => {
@@ -61,8 +66,19 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		});
 	};
 
+	const nextPlayer = () => {
+		const { players, currentPlayer } = game;
+		const currentPlayerIndex = players.indexOf(currentPlayer);
+		if (currentPlayerIndex === players.length - 1) {
+			game.currentPlayer = players[0];
+		} else {
+			game.currentPlayer = players[currentPlayerIndex + 1];
+		}
+	};
+
 	const history: string[] = [];
 	const game: Game = {
+		nextPlayer,
 		startNextGame,
 		log: (message) => history.push(message),
 		history,
@@ -79,10 +95,11 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		status: 'starting',
 		error: '',
 		credits: 0,
-		players: [player],
-		currentPlayer: player,
+		players: [player1, player2],
+		currentPlayer: player1,
 		pressedButtons: [],
 		pressedButton: undefined,
+		unpressedButton: undefined,
 		enableOrDisableFlippers,
 		tapCoil,
 		startTurn,
@@ -96,6 +113,7 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 			toggledButtonId !== undefined ? buttons.find((button) => button.id === toggledButtonId) : undefined;
 
 		game.pressedButton = !!toggledButton?.normallyClosed !== closed ? toggledButton : undefined;
+		game.unpressedButton = !!toggledButton?.normallyClosed === closed ? toggledButton : undefined;
 
 		game.pressedButtons = buttons.filter((button) =>
 			buttonState.some((b) => button.id === b.id && !!button.normallyClosed !== b.closed)

@@ -4,13 +4,13 @@ import Rule from '@/engine/entities/Rule';
 // This rule only gets applied if a ball comes out without us ejecting it, since we already
 //  would have removed it from kickers-with-balls if we ejected it ourselves.
 const removeBallFromKicker: Rule = ({ game }) => {
-	const { kickersWithBalls, pressedButton, status, log } = game;
+	const { kickersWithBalls, unpressedButton, status, log } = game;
 
 	if (status !== 'playing') {
 		return;
 	}
 
-	const kickerIndex = kickersWithBalls.findIndex((kicker) => kicker.button.id === pressedButton?.id);
+	const kickerIndex = kickersWithBalls.findIndex((kicker) => kicker.button.id === unpressedButton?.id);
 	if (kickerIndex === -1) {
 		return;
 	}
