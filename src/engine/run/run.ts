@@ -1,6 +1,6 @@
 import buttons from '../const/buttons/buttons';
 import modes from '../const/modes/modes';
-import { startingBallsPerPlayer } from '../const/setup/setup';
+import { initialsLength, startingBallsPerPlayer } from '../const/setup/setup';
 import Game, { Selected } from '../entities/Game';
 import Hardware from '../entities/Hardware';
 import Player from '../entities/Player';
@@ -33,12 +33,12 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		score: 0,
 		ballsTotal: startingBallsPerPlayer,
 		ballsUsed: 0,
-		initials: 'AAA',
+		initials: Array(initialsLength).fill('A').join(''),
 	};
 
 	const player2: Player = {
 		...player1,
-		initials: 'BBB',
+		initials: Array(initialsLength).fill('B').join(''),
 	};
 
 	const getCurrentModeStep = () => {

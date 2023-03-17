@@ -1,5 +1,5 @@
 import { leftFlipperButtonButton, rightFlipperButtonButton } from '@/engine/const/buttons/buttons';
-import { maxPlayers } from '@/engine/const/setup/setup';
+import { initialsLength, maxPlayers, startingBallsPerPlayer } from '@/engine/const/setup/setup';
 import { Selected } from '@/engine/entities/Game';
 import Rule from '@/engine/entities/Rule';
 
@@ -18,7 +18,12 @@ const changeNumberOfPlayers: Rule = ({ game }) => {
 		}
 	} else if (pressedButton?.id === rightFlipperButtonButton.id) {
 		if (players.length < maxPlayers) {
-			players.length++;
+			players.push({
+				ballsTotal: startingBallsPerPlayer,
+				ballsUsed: 0,
+				initials: Array(initialsLength).fill('A').join(''),
+				score: 0,
+			});
 			log(`right flipper changed number of players to ${players.length}`);
 		}
 	}
