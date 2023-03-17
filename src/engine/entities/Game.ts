@@ -14,7 +14,14 @@ export declare type Status =
 	| 'gameOver'
 	| 'waitingForNextPlayer';
 
+export const Selected = {
+	numberOfPlayers: -1,
+};
+
+export const minSelected = Selected.numberOfPlayers;
+
 export default interface Game {
+	selected: number;
 	log: (message: string) => void;
 	history: string[];
 	currentMode: Mode;

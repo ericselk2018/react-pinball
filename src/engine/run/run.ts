@@ -1,7 +1,7 @@
 import buttons from '../const/buttons/buttons';
 import modes from '../const/modes/modes';
 import { startingBallsPerPlayer } from '../const/setup/setup';
-import Game from '../entities/Game';
+import Game, { Selected } from '../entities/Game';
 import Hardware from '../entities/Hardware';
 import Player from '../entities/Player';
 import rules from '../rules/rules';
@@ -83,6 +83,7 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 
 	const history: string[] = [];
 	const game: Game = {
+		selected: Selected.numberOfPlayers,
 		nextPlayer,
 		startNextGame,
 		log: (message) => history.push(message),
