@@ -4,33 +4,20 @@ import Rule from '@/engine/entities/Rule';
 
 // Decides if balls should be kicked or held when a ball enters a kicker.
 const kickOrHoldBall: Rule = ({ game }) => {
-	const {
-		ballsInPlay,
-		pressedButton,
-		status,
-		kickersWithBalls,
-		currentModeStep,
-		tapCoil,
-		modeStepButtonsHitThisTurn,
-		log,
-	} = game;
-
-	if (status !== 'playing' || !currentModeStep) {
-		return;
-	}
+	const { status, pressedButton, kickersWithBalls, currentModeStep, tapCoil, modeStepButtonsHitThisTurn, log } = game;
 
 	const kicker = kickers.find((kicker) => kicker.button.id === pressedButton?.id);
 	if (!kicker) {
 		return;
 	}
 
-	if (!currentModeStep.buttons.some((button) => button.id === kicker.button.id)) {
+	if (status !== 'playing' || !currentModeStep?.buttons.some((button) => button.id === kicker.button.id)) {
 		tapCoil({ coil: kicker.coil });
 		log(`rejected ball from entering kicker ${kicker.button.name}`);
 		return;
 	}
 
-	if (ballsInPlay === totalBallsInMachine || kickersWithBalls.length === kickers.length) {
+	if (kickersWithBalls.length + 1 === totalBallsInMachine || kickersWithBalls.length === kickers.length) {
 		log(
 			`kickers full - ejecting balls from kickers ${[kicker, ...kickersWithBalls]
 				.map((kicker) => kicker.button.name)

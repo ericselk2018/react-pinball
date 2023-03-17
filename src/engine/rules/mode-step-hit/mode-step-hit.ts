@@ -12,8 +12,10 @@ const modeStepHit: Rule = (args: { game: Game }) => {
 
 	const { buttons } = currentModeStep;
 	if (buttons.some((button) => button.id === pressedButton.id)) {
-		modeStepButtonsHitThisTurn.push(pressedButton);
-		log(`mode step button hit this turn ${pressedButton.name}`);
+		if (!modeStepButtonsHitThisTurn.some((button) => button.id === pressedButton.id)) {
+			modeStepButtonsHitThisTurn.push(pressedButton);
+			log(`mode step button hit this turn ${pressedButton.name}`);
+		}
 	}
 };
 

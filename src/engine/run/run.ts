@@ -22,9 +22,11 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 	const { buttons: buttonState, enableOrDisableFlippers, tapCoil } = await start({ hardware, onButtonChange });
 
 	const startTurn = () => {
+		const { log } = game;
 		game.turnStartTimeInMilliseconds = Date.now();
 		game.buttonsPressedThisTurn.length = 0;
 		game.modeStepButtonsHitThisTurn.length = 0;
+		log('started next turn');
 	};
 
 	const player1: Player = {
@@ -59,21 +61,24 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 	};
 
 	const startNextGame = () => {
-		game.players.forEach((player) => {
+		const { players, log } = game;
+		players.forEach((player) => {
 			player.ballsUsed = 0;
 			player.ballsTotal = startingBallsPerPlayer;
 			player.score = 0;
 		});
+		log('next game started');
 	};
 
 	const nextPlayer = () => {
-		const { players, currentPlayer } = game;
+		const { players, currentPlayer, log } = game;
 		const currentPlayerIndex = players.indexOf(currentPlayer);
 		if (currentPlayerIndex === players.length - 1) {
 			game.currentPlayer = players[0];
 		} else {
 			game.currentPlayer = players[currentPlayerIndex + 1];
 		}
+		log(`player changed to ${game.currentPlayer.initials}`);
 	};
 
 	const history: string[] = [];
