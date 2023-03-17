@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import Game from './engine/entities/Game';
+import Blink from './components/blink/Blink';
+import { initialsLength } from './engine/const/setup/setup';
+import Game, { Selected } from './engine/entities/Game';
 import fast from './engine/hardware/fast/fast';
 import run from './engine/run/run';
 
@@ -20,6 +22,32 @@ const App = () => {
 	useEffect(() => {
 		update = ({ game }) => setGame({ ...game });
 	});
+
+	if (game) {
+		const { status, currentMode, players, selected } = game;
+		if (status === 'starting') {
+			return <div>Starting...</div>;
+		}
+		if (status === 'gameOver') {
+			return <div>Game Over</div>;
+		}
+		if (status === 'waitingForLaunch') {
+			return <div>Mode Select: {currentMode.name}</div>;
+		}
+		if (status === 'readyToPlay') {
+			if (selected === Selected.numberOfPlayers) {
+				return <div>Number of Players: {players.length}</div>;
+			}
+			const selectedPlayerIndex = Math.floor(selected / initialsLength);
+			const selectedPlayer = players[selectedPlayerIndex];
+			const { initials } = selectedPlayer;
+			const selectedInitialIndex = selected % initialsLength;
+			return <Blink blinking={true} text={initials} blinkingLetter={selectedInitialIndex} />;
+		}
+		if (status === 'waitingForNextPlayer') {
+			return <div>Waiting For Next Player</div>;
+		}
+	}
 
 	return <pre>{JSON.stringify(game, undefined, '\t')}</pre>;
 };
