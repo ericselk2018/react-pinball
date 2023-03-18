@@ -114,6 +114,10 @@ UI displays one of the switch names not in expected state, to assist service tec
 
 Holding Start button for more than 1 second will eject a ball, if possible, for scenarios where a ball could be used to unstick another ball or switch without opening the machine.
 
+Advances to Playing & Mode Select mode when machine is in normal state.
+
+After 60 seconds, if machine not in normal state, returns to Attract mode.
+
 ### Playing & Mode Select
 
 The same UI is shared during playing and mode select. The only difference is mode select happens while only 1 ball in play and that ball is sitting on the plunger switch ready to launch.
