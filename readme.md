@@ -63,3 +63,95 @@ If you see code in here that isn't being used, I just forgot to delete it. I don
 ### KISS
 
 Keep it simple stupid. I'm stupid, so I write stupid code, but this is a good thing if you are also stupid, because maybe you will understand it. Stop learning, you were born smart enough, and go play pinball!
+
+## Game Flow
+
+### Base
+
+At any time, holding down the Select button for more than 1 second will toggle mute.
+
+Any time while not playing, holding down the Start button for more than 1 second will start a "Free Play" game.
+
+### Boot
+
+Mostly wait for all switches to be in normal state. Only attempted automated cleanup will be to kick any balls out of kickers, since that is the only expected common problem that is easy to resolve. Any other stuck ball issues will require service to resolve. Possibly add a way to force a ball to eject in this mode to allow using a ball to unstick another ball without glass removal, if balls get stuck much.
+
+During boot UI might just display issues in large text like "left rollover pressed" or "no ball in slot 3". In most cases boot should be so fast not worth spending time on much else.
+
+This mode will also shortly run between each new game, not just on initial startup, to make sure each game starts in the correct default state.
+
+### Attract Mode
+
+UI showing various video clips full screen. Music playing full songs. Light show playing.
+
+Select button shows a slide with options that flippers can change:
+
+-   View High Scores
+
+*   Flippers toggle between scores and option list slide
+
+-   View Last Game
+
+*   Flippers toggle between last game stats and option list slide
+
+-   Song Select
+
+-   Volume
+
+-   Lights (on/dim/off)
+
+Pressing select moves through each option above. Selected option flashes/blinks.
+
+Pressing Start while options slide is showing will hide it. Pressing Start while not open will start Game Setup mode.
+
+### Game Setup
+
+Select number of players and set initials.
+
+UI also displays number of credits with "insert coin" or "press start" (when enough credits) info.
+
+Press select to toggle through setup options and use flippers to adjust options.
+
+Has a "Free Play" option which starts a single player game without any modes and does not require or use any credits, and always sets the initials to "MIA".
+
+After 10 seconds of inactivity returns to Attract Mode.
+
+### Playing & Mode Select
+
+The same UI is shared during playing and mode select. The only difference is mode select happens while only 1 ball in play and that ball is sitting on the plunger switch ready to launch.
+
+Playing UI displayed which contains sections:
+
+-   Top line with players scores, initials, ball counts, with current player highlighted.
+
+-   Next section reserved for dynamic status updates. Shows points earned, combo shot bonuses, tasks completed. Info not displayed for very long, slightly longer for more important achievements.
+
+-   Lower Left corner displays to do list, so player knows what tasks they need to do and what they have completed for current mode.
+
+*   In Free Play mode, this section just displays some generic "free play" image/text.
+
+-   Lower right corner shows video clips. During mode select the clip changes as you cycle through modes and shows a little clip related to the mode. During game play videos related to completed tasks will play as each task is complete, short clips.
+
+When game ends, return to Attract Mode, but default to showing slide with previous game stats.
+
+While playing, Start button is used to eject ball at start of each new players turn. This helps make it obvious when it is the next turn vs just another ball for same player. In a single-player game, Start button is not used.
+
+While playing, Select button skips song.
+
+During mode select, pressing Select opens options menu (same as Attract Mode). Pressing Start returns to mode select. Launching ball will also close options menu since that will cause mode select to end.
+
+During mode select, flippers are used to change modes. In Free Play mode flippers do nothing during mode select.
+
+## Rules
+
+### Modes
+
+All modes are a collection of 1 to 3 steps. Each step has 1 to 4 tasks. Each task has a related target switch. Each target switch has an image related to it, as well as 1 or more video clips. The image is displayed on the UI and also on the playfield with an LED to indicate active targets (flashing) and complete targets (lit). A video clip (selected randomly) plays when task switch is hit (task complete).
+
+### Combo Shots
+
+Shots are a collection of 2 or more switches. Each shot has a flag for ordered/unordered, if ordered the switches must be hit in order. Each shot has a dificulty value, a multiplier used to calculate points earned if shot is completed. Each shot has 0 or more video clips that will be played (1 selected randomly) if shot is completed. Each shot has a name that will be displayed in the dynamic status update area of the UI if shot is completed.
+
+### Single Shots
+
+Each switch has a dificulty value, a multiplier used to calculate points. Points are earned each time a switch is hit.
