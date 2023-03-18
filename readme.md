@@ -54,8 +54,6 @@ You can create a new file like fast.ts to support whatever hardware you have. It
 
 ## Design Notes
 
-lmao, you really think I'm going to write documentation beyond getting started? Go figure it out yourself!
-
 ### YAGNI
 
 If you see code in here that isn't being used, I just forgot to delete it. I don't believe in having any unused code, or writing any code that I don't yet need. If I don't need it today, I don't need it tomorrow (until I do).
