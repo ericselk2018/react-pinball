@@ -68,15 +68,7 @@ Keep it simple stupid. I'm stupid, so I write stupid code, but this is a good th
 
 At any time, holding down the Select button for more than 1 second will toggle mute.
 
-Any time while not playing, holding down the Start button for more than 1 second will start a "Free Play" game.
-
-### Boot
-
-Mostly wait for all switches to be in normal state. Only attempted automated cleanup will be to kick any balls out of kickers, since that is the only expected common problem that is easy to resolve. Any other stuck ball issues will require service to resolve. Possibly add a way to force a ball to eject in this mode to allow using a ball to unstick another ball without glass removal, if balls get stuck much.
-
-During boot UI might just display issues in large text like "left rollover pressed" or "no ball in slot 3". In most cases boot should be so fast not worth spending time on much else.
-
-This mode will also shortly run between each new game, not just on initial startup, to make sure each game starts in the correct default state.
+Any time while not playing, except during boot, holding down the Start button for more than 1 second will start a "Free Play" game.
 
 ### Attract Mode
 
@@ -113,6 +105,14 @@ Press select to toggle through setup options and use flippers to adjust options.
 Has a "Free Play" option which starts a single player game without any modes and does not require or use any credits, and always sets the initials to "MIA".
 
 After 10 seconds of inactivity returns to Attract Mode.
+
+### Wait/Fix
+
+If player tries to start a game and the machine isn't in the correct state yet, this mode runs until the machine is returned to normal state.
+
+UI displays one of the switche names not in expected state (if more than one, only one is shown at a time), to assist service tech.
+
+Holding Start button for more than 1 second will eject a ball, if possible, for scenarios where a ball could be used to unstick another ball or switch without opening the machine.
 
 ### Playing & Mode Select
 
