@@ -110,7 +110,7 @@ After 10 seconds of inactivity returns to Attract Mode.
 
 If player tries to start a game and the machine isn't in the correct state yet, this mode runs until the machine is returned to normal state.
 
-UI displays one of the switche names not in expected state (if more than one, only one is shown at a time), to assist service tech.
+UI displays one of the switch names not in expected state (if more than one, only one is shown at a time), to assist service tech.
 
 Holding Start button for more than 1 second will eject a ball, if possible, for scenarios where a ball could be used to unstick another ball or switch without opening the machine.
 
