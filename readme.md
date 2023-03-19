@@ -157,3 +157,21 @@ Shots are a collection of 2 or more switches. Each shot has a flag for ordered/u
 ### Single Shots
 
 Each switch has a dificulty value, a multiplier used to calculate points. Points are earned each time a switch is hit.
+
+## Production
+
+When ready to run game in the final setup run:
+
+```bash
+npm run build
+```
+
+This will run the production build and output the files in the build folder. Copy these files to your host machine, I'm using a shared drive to make this easy, and the local path on the host machine is c:\pinball\.
+
+Setup a command similar to the following to run when your OS boots, to launch Chrome in kiosk mode (fullscreen without any other UIs or overlays visible) and load the app:
+
+```bash
+"c:\program files\google\chrome\application\chrome.exe" --kiosk "c:\pinball\index.html"
+```
+
+If testing the --kiosk option you need to make sure Chrome is fully shutdown before running the command, otherwise it will be ignored.
