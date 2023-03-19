@@ -157,6 +157,7 @@ export const selectButtonButton: Button = { id: id(3), name: 'Select Button' };
 export const tiltButton: Button = { id: id(4), name: 'Tilt' };
 export const coinDoorButton: Button = { id: id(5), name: 'Coin Door' };
 export const coinSlotButton: Button = { id: id(6), name: 'Coin Slot' };
+export const beginTestButton: Button = { id: id(7), name: 'Begin Test' };
 
 export const driverButtons: ReadonlyArray<TargetButton> = [
 	fourTargetGroupTopButton,
