@@ -173,7 +173,10 @@ This will run the production build and output the files to the folder setup in w
 Setup a command similar to the following to run when your OS boots, to launch Chrome in kiosk mode (fullscreen without any other UIs or overlays visible) and load the app:
 
 ```bash
-"c:\program files\google\chrome\application\chrome.exe" --kiosk "c:\pinball\index.html"
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --kiosk "http://localhost:3000"
+serve "c:\pinball"
 ```
 
 If testing the --kiosk option you need to make sure Chrome is fully shutdown before running the command, otherwise it will be ignored.
+
+Above example is using an npm package for the serve command. I was not able to avoid having a web server because Chrome does not save the serial port access when run using the file:// protocol.
