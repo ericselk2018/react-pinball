@@ -10,6 +10,7 @@ import Hardware from '../entities/Hardware';
 import Kicker from '../entities/Kicker';
 import Slingshot from '../entities/Slingshot';
 
+// Starts hardware and does initial configuration.
 const start = async (args: {
 	hardware: Hardware;
 	onButtonChange: (args: { buttonId: number; closed: boolean }) => void;
@@ -103,7 +104,7 @@ const start = async (args: {
 
 	const configureKicker = async (args: { kicker: Kicker }) => {
 		const { kicker } = args;
-		const { coil } = kicker;
+		const { coil, button } = kicker;
 
 		await configurePulse({
 			coilId: coil.id,
@@ -111,6 +112,14 @@ const start = async (args: {
 			pulseTimeInMilliseconds: 30,
 			restTimeInMilliseconds: 90,
 		});
+
+		// The most common and easiest to fix issue that can cause a stuck ball is a ball being
+		//  in a kicker when the system is shutdown (game not finished).  If kicker has a ball
+		//  at startup, we kick it out now, to get game ready for play ASAP.
+		const kickerButton = buttonState.find((b) => button.id === b.id);
+		if (kickerButton && kickerButton.closed !== !!button.normallyClosed) {
+			await tapCoil({ coil });
+		}
 	};
 
 	const configureManualCoil = async (args: { coil: Coil }) => {
