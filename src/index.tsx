@@ -23,6 +23,16 @@ const App = () => {
 		update = ({ game }) => setGame({ ...game });
 	});
 
+	// retry every 10 seconds if game fails to start
+	useEffect(() => {
+		if (!game) {
+			const timeout = setTimeout(() => {
+				location.reload();
+			}, 10000);
+			return () => clearTimeout(timeout);
+		}
+	}, [game]);
+
 	if (game) {
 		const {
 			status,
