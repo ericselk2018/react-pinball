@@ -7,6 +7,7 @@ import Player from '../entities/Player';
 import rules from '../rules/rules';
 import start from '../start/start';
 
+// Starts hardware and runs game.  Game is just a collection of rules that apply on each button change.
 const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) => void }) => {
 	const { hardware, onUpdate } = args;
 
