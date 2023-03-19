@@ -119,6 +119,10 @@ const App = () => {
 		}
 	}
 
+	if (!game) {
+		return <img style={{ width: '100%' }} src="./images/startup.jpg" />;
+	}
+
 	return <pre>{JSON.stringify(game, undefined, '\t')}</pre>;
 };
 

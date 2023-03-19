@@ -166,7 +166,7 @@ When ready to run game in the final setup run:
 npm run build
 ```
 
-This will run the production build and output the files in the build folder. Copy these files to your host machine, I'm using a shared drive to make this easy, and the local path on the host machine is c:\pinball\.
+This will run the production build and output the files to the folder setup in webpack.config.js which I have set to a shared folder on my host PC. The local path for the shared folder is c:\pinball\ and the network (UNC) path is \\fastandfurious\pinball.
 
 Setup a command similar to the following to run when your OS boots, to launch Chrome in kiosk mode (fullscreen without any other UIs or overlays visible) and load the app:
 

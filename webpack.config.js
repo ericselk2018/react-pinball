@@ -5,7 +5,7 @@ module.exports = {
 	entry: './src/index.tsx',
 	output: {
 		filename: 'main.js',
-		path: path.resolve(__dirname, 'build'),
+		path: '\\\\fastandfurious\\pinball\\',
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
@@ -14,7 +14,7 @@ module.exports = {
 	],
 	devServer: {
 		static: {
-			directory: path.join(__dirname, 'build'),
+			directory: path.join(__dirname, 'public'),
 		},
 		port: 3000,
 	},
