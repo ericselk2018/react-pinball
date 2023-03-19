@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import Blink from './components/blink/Blink';
 import { initialsLength } from './engine/const/setup/setup';
 import Game, { Selected } from './engine/entities/Game';
-import fast from './engine/hardware/fast/fast';
+import fast, { requestPort } from './engine/hardware/fast/fast';
 import run from './engine/run/run';
 
 let update: ((args: { game: Game }) => void) | undefined;
@@ -130,7 +130,7 @@ const App = () => {
 	}
 
 	if (!game) {
-		return <img style={{ width: '100%' }} src="./images/startup.jpg" />;
+		return <img onClick={requestPort} style={{ width: '100%' }} src="./images/startup.jpg" />;
 	}
 
 	return <pre>{JSON.stringify(game, undefined, '\t')}</pre>;

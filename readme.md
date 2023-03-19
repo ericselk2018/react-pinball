@@ -36,6 +36,8 @@ window.onclick = () => {navigator.serial.requestPort({filters: [{usbVendorId: 11
 
 Then click anywhere in the browser window. A prompt should open asking you to select a port. Make sure you have [figured out which one is the NET processor](https://fastpinball.com/docs/) (usually the one with the lowest number, but not always) and select that one. Now reload the page (F5).
 
+Optionally - you can try clicking on the splashscreen image that is displayed which should run the above command for you.
+
 ### All Done!
 
 You should now be looking at the game running in your browser.
