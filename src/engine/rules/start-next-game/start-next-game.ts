@@ -2,9 +2,9 @@ import { startButtonButton } from '@/engine/const/buttons/buttons';
 import Rule from '@/engine/entities/Rule';
 
 const startNextGame: Rule = ({ game }) => {
-	const { status, log, pressedButton, startNextGame } = game;
+	const { status, log, pressedButton, startNextGame, showingMenu } = game;
 
-	if (status !== 'gameOver') {
+	if (status !== 'gameOver' || showingMenu) {
 		return;
 	}
 

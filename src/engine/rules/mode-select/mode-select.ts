@@ -4,9 +4,9 @@ import Rule from '@/engine/entities/Rule';
 
 // While waiting for launch, allow mode selection using flipper buttons.
 const modeSelect: Rule = ({ game }) => {
-	const { pressedButton, status, currentMode, log } = game;
+	const { pressedButton, status, currentMode, log, showingMenu } = game;
 
-	if (status !== 'waitingForLaunch' || !pressedButton) {
+	if (status !== 'waitingForLaunch' || !pressedButton || showingMenu) {
 		return;
 	}
 

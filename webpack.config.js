@@ -11,6 +11,7 @@ module.exports = (env, argv) => ({
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: path.join(__dirname, 'public', 'index.html'),
+			production: argv.mode === 'production',
 		}),
 		new CopyWebpackPlugin({
 			patterns: [{ from: '**/*', context: 'public/', filter: (path) => !path.includes('index.html') }],

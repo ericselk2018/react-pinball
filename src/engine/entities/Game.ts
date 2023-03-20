@@ -1,9 +1,11 @@
 import Button from './Button';
 import Coil from './Coil';
+import HighScore from './HighScore';
 import Kicker from './Kicker';
 import Mode from './Mode';
 import ModeStep from './ModeStep';
 import Player from './Player';
+import Shot from './Shot';
 
 export declare type Status =
 	| 'starting'
@@ -13,14 +15,23 @@ export declare type Status =
 	| 'gameOver'
 	| 'waitingForNextPlayer';
 
-export const Selected = {
+export const SelectedGameSetupMenuOption = {
 	numberOfPlayers: -1,
 };
 
-export const minSelected = Selected.numberOfPlayers;
+export const minGameSetupMenuOption = SelectedGameSetupMenuOption.numberOfPlayers;
+
+export const OptionsMenuOption = {
+	viewHighScores: 0,
+	lastGame: 1,
+	song: 2,
+	volume: 3,
+	lights: 4,
+};
+
+export const maxOptionsMenuOption = OptionsMenuOption.lights;
 
 export default interface Game {
-	selected: number;
 	log: (message: string) => void;
 	history: string[];
 	currentMode: Mode;
@@ -43,4 +54,16 @@ export default interface Game {
 	startTurn: () => void;
 	startNextGame: () => void;
 	nextPlayer: () => void;
+	song: number;
+	showingMenu: 'options' | 'game-setup' | undefined;
+	selectedMenuOption: number;
+	volume: number;
+	showingMenuDetails: boolean;
+	lights: 'on' | 'dim' | 'off';
+	addPlayer: () => void;
+	endGame: () => void;
+	readonly creditsRequired: number;
+	readonly creditsNeeded: number;
+	readonly shots: Shot[];
+	readonly highScores: HighScore[];
 }

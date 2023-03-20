@@ -8,7 +8,7 @@ const gameOver: Rule = ({ game }) => {
 	const lastPlayer = players[players.length - 1];
 
 	if (currentPlayer === lastPlayer && currentPlayer.ballsUsed === currentPlayer.ballsTotal) {
-		game.status = 'gameOver';
+		game.endGame();
 		log('game over');
 		return true;
 	}
