@@ -17,6 +17,7 @@ import modeStepHit from './mode-step-hit/mode-step-hit';
 import playOnStart from './play-on-start/play-on-start';
 import readyToPlay from './ready-to-play/ready-to-play';
 import removeBallFromKicker from './remove-ball-from-kicker/remove-ball-from-kicker';
+import selectGameSetupOption from './select-game-setup-option/select-game-setup-option';
 import selectLights from './select-lights/select-lights';
 import selectOption from './select-option/select-option';
 import selectSong from './select-song/select-song';
@@ -59,6 +60,7 @@ const rules: Rule[] = [
 	toggleLastGame,
 	selectLights,
 	hideOptions,
+	selectGameSetupOption,
 ];
 
 export default rules;

@@ -5,9 +5,13 @@ import Rule from '@/engine/entities/Rule';
 
 // Before game is started, allow changing number of players using flippers when selection is set to number of players.
 const changeNumberOfPlayers: Rule = ({ game }) => {
-	const { players, status, pressedButton, selectedMenuOption, log, addPlayer } = game;
+	const { players, status, pressedButton, selectedMenuOption, log, addPlayer, showingMenu } = game;
 
-	if (status !== 'readyToPlay' || selectedMenuOption !== SelectedGameSetupMenuOption.numberOfPlayers) {
+	if (status === 'playing' || status === 'waitingForLaunch' || status === 'waitingForNextPlayer') {
+		return;
+	}
+
+	if (selectedMenuOption !== SelectedGameSetupMenuOption.numberOfPlayers || showingMenu !== 'game-setup') {
 		return;
 	}
 
