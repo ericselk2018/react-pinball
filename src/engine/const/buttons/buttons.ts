@@ -92,6 +92,12 @@ export const troughBallTwoButton: Button = { id: id(2), name: 'Trough Ball 2', n
 export const troughBallThreeButton: Button = { id: id(3), name: 'Trough Ball 3', normallyClosed: true, dificulty: 0 };
 export const troughBallFourButton: Button = { id: id(4), name: 'Trough Ball 4', normallyClosed: true, dificulty: 0 };
 export const troughBallFiveButton: Button = { id: id(5), name: 'Trough Ball 5', normallyClosed: true, dificulty: 0 };
+export const plungerRolloverButton: Button = {
+	id: id(6),
+	name: 'Plunger Rollover',
+	normallyClosed: true,
+	dificulty: 0,
+};
 
 id = (pin: number) => buttonId({ board: upperThirdNodeBoard, header: 0, pin });
 export const topRightKickerButton: TargetButton = {
@@ -137,12 +143,6 @@ export const topRolloverButton: TargetButton = {
 	image: 'images/dom.jpg',
 	videos: ['videos/dom1.mp4'],
 	dificulty: 0.9,
-};
-export const plungerRolloverButton: Button = {
-	id: id(6),
-	name: 'Plunger Rollover',
-	normallyClosed: true,
-	dificulty: 0,
 };
 
 id = (pin: number) => buttonId({ board: upperThirdNodeBoard, header: 1, pin });
