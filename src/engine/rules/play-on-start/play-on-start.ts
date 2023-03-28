@@ -1,11 +1,9 @@
 import { startButtonButton, troughBallOneButton } from '@/engine/const/buttons/buttons';
 import { troughBallEjectCoil } from '@/engine/const/coils/coils';
-import Game from '@/engine/entities/Game';
 import Rule from '@/engine/entities/Rule';
 
 // Transition from ready-to-play or waiting-for-next-player to playing when start button is pressed.
-const playOnStart: Rule = (args: { game: Game }) => {
-	const { game } = args;
+const playOnStart: Rule = ({ game }) => {
 	const { pressedButtons, status, pressedButton, tapCoil, log, showingMenu, creditsNeeded } = game;
 
 	if (status !== 'readyToPlay' && status !== 'waitingForNextPlayer') {
