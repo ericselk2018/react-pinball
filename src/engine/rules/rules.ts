@@ -9,6 +9,7 @@ import drainBall from './drain-ball/drain-ball';
 import drainLastBall from './drain-last-ball/drain-last-ball';
 import ejectNextBall from './eject-next-ball/eject-next-ball';
 import enableOrDisableFlippers from './enable-or-disable-flippers/enable-or-disable-flippers';
+import hideNotReadyToStart from './hide-not-ready-to-start/hide-not-ready-to-start';
 import hideOptions from './hide-options/hide-options';
 import kickBallsOnDrain from './kick-balls-on-drain/kick-balls-on-drain';
 import kickOrHoldBall from './kick-or-hold-ball/kick-or-hold-ball';
@@ -63,6 +64,7 @@ const rules: Rule[] = [
 	selectLights,
 	hideOptions,
 	selectGameSetupOption,
+	hideNotReadyToStart,
 ];
 
 export default rules;
