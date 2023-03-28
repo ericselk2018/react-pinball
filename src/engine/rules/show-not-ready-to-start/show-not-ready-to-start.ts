@@ -1,10 +1,8 @@
 import { startButtonButton } from '@/engine/const/buttons/buttons';
-import Game from '@/engine/entities/Game';
 import Rule from '@/engine/entities/Rule';
 
 // Display not-ready-to-start menu if player tries to start game before ready.
-const showNotReadyToStart: Rule = (args: { game: Game }) => {
-	const { game } = args;
+const showNotReadyToStart: Rule = ({ game }) => {
 	const { status, pressedButton, log, showingMenu, creditsNeeded } = game;
 
 	if (status !== 'starting' || showingMenu !== 'game-setup') {
