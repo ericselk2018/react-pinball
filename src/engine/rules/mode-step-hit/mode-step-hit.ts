@@ -1,9 +1,7 @@
-import Game from '@/engine/entities/Game';
 import Rule from '@/engine/entities/Rule';
 
 // Mark mode step button as complete when pressed.
-const modeStepHit: Rule = (args: { game: Game }) => {
-	const { game } = args;
+const modeStepHit: Rule = ({ game }) => {
 	const { status, pressedButton, currentModeStep, modeStepButtonsHitThisTurn, log } = game;
 
 	if (status !== 'playing' || !pressedButton || !currentModeStep) {
