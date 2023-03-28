@@ -1,20 +1,22 @@
 import { targetButtons } from '../const/buttons/buttons';
 import Game from '../entities/Game';
 
-const lightUpdater = ({ game }: { game: Game }) => {
-	const { buttonsPressedThisTurn, currentModeStep, modeStepButtonsHitThisTurn, pressedButton, updateLights, status } =
-		game;
+let blinkInterval: number | undefined = undefined;
+let blinkOn = false;
 
-	let blinkInterval: number | undefined = undefined;
-	let blinkOn = false;
+const lightUpdater = ({ game: previousGame }: { game: Game }) => {
+	const { status: previousStatus, currentModeStep } = previousGame;
+	const previousModeStepName = currentModeStep?.name;
 
-	const previousmModeStepTargetButtons = currentModeStep?.buttons.filter(
-		(button) => !modeStepButtonsHitThisTurn.some((b) => b.id === button.id)
+	const previousmModeStepTargetButtons = previousGame.currentModeStep?.buttons.filter(
+		(button) =>
+			!previousGame.modeStepButtonsHitThisTurn.some((b) => b.id === button.id) &&
+			!previousGame.kickersWithBalls.some((kicker) => kicker.button.id === button.id)
 	);
 
-	const update = () => {
+	const update = ({ game }: { game: Game }) => {
 		// If the current mode step changes, we need to update blinking lights.
-		if (game.currentModeStep?.name !== currentModeStep?.name) {
+		if (game.currentModeStep?.name !== previousModeStepName) {
 			// We always reset the blink interval so that the first blink will happen at a consistent time.
 			if (blinkInterval !== undefined) {
 				clearInterval(blinkInterval);
@@ -25,9 +27,9 @@ const lightUpdater = ({ game }: { game: Game }) => {
 			// Update previously blinking lights to the correct solid state:
 			//  They are on if hit this turn, otherwise off.
 			if (previousmModeStepTargetButtons?.length) {
-				updateLights({
+				game.updateLights({
 					updates: previousmModeStepTargetButtons.map((button) => {
-						const colorPercent = buttonsPressedThisTurn.some((b) => b.id === button.id) ? 1 : 0;
+						const colorPercent = game.buttonsPressedThisTurn.some((b) => b.id === button.id) ? 1 : 0;
 						const fadeDurationInMilliseconds = 100;
 						return {
 							id: button.lightId,
@@ -41,15 +43,18 @@ const lightUpdater = ({ game }: { game: Game }) => {
 			}
 
 			// If we have mode step targets, we start an interval to make them blink.
-			const modeStepTargetButtons = currentModeStep?.buttons.filter(
-				(button) => !modeStepButtonsHitThisTurn.some((b) => b.id === button.id)
+			const modeStepTargetButtons = game.currentModeStep?.buttons.filter(
+				(button) =>
+					!game.modeStepButtonsHitThisTurn.some((b) => b.id === button.id) &&
+					!game.kickersWithBalls.some((kicker) => kicker.button.id === button.id)
 			);
 			if (modeStepTargetButtons?.length) {
 				const fadeDurationInMilliseconds = 500;
-				setInterval(() => {
+
+				const blink = async () => {
 					const colorPercent = blinkOn ? 1 : 0;
 					blinkOn = !blinkOn;
-					updateLights({
+					game.updateLights({
 						updates: modeStepTargetButtons.map((button) => ({
 							id: button.lightId,
 							redPercent: colorPercent,
@@ -58,15 +63,19 @@ const lightUpdater = ({ game }: { game: Game }) => {
 							fadeDurationInMilliseconds,
 						})),
 					});
-				}, fadeDurationInMilliseconds * 1.5);
+				};
+
+				blinkInterval = window.setInterval(blink, fadeDurationInMilliseconds * 1.5);
+				blink();
 			}
 		}
 
 		// Turn light on when a target button is pressed.
-		const pressedTargetButton = pressedButton && targetButtons.find((button) => button.id === pressedButton.id);
+		const pressedTargetButton =
+			game.pressedButton && targetButtons.find((button) => button.id === game.pressedButton?.id);
 		if (pressedTargetButton) {
 			const fadeDurationInMilliseconds = 100;
-			updateLights({
+			game.updateLights({
 				updates: [
 					{
 						id: pressedTargetButton.lightId,
@@ -80,10 +89,10 @@ const lightUpdater = ({ game }: { game: Game }) => {
 		}
 
 		// Turn off all lights when a turn is over.
-		if (status !== game.status) {
+		if (previousStatus !== game.status) {
 			if (game.status === 'gameOver' || game.status === 'waitingForNextPlayer') {
 				const fadeDurationInMilliseconds = 100;
-				updateLights({
+				game.updateLights({
 					updates: targetButtons.map((button) => ({
 						id: button.lightId,
 						redPercent: 0,
