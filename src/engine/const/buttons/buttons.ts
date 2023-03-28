@@ -41,144 +41,135 @@ export const rightRolloverButton: Button = {
 	normallyClosed: true,
 	dificulty: 0.7,
 };
-export const leftMiddleRolloverButton: TargetButton = {
-	id: id(6),
-	name: 'Left Middle Rollover',
-	normallyClosed: true,
-	image: 'images/dom.jpg',
-	videos: ['videos/dom1.mp4'],
-	dificulty: 0.9,
-};
-export const fourTargetGroupTopButton: TargetButton = {
-	id: id(7),
-	name: '4-Target Group - Top',
-	image: 'images/dom.jpg',
-	videos: ['videos/dom1.mp4'],
-	dificulty: 0.5,
-};
-
-id = (pin: number) => buttonId({ board: lowerThirdNodeBoard, header: 1, pin });
-export const fourTargetGroupBottomButton: TargetButton = {
-	id: id(0),
-	name: '4-Target Group - Bottom',
-	image: 'images/letty.jpg',
-	videos: ['videos/letty1.mp4'],
-	dificulty: 0.5,
-};
-export const fourTargetGroupSecondFromBottomButton: TargetButton = {
-	id: id(1),
-	name: '4-Target Group - 2nd From Bottom',
-	image: 'images/mia.jpg',
-	videos: ['videos/mia1.mp4'],
-	dificulty: 0.5,
-};
-export const fourTargetGroupSecondFromTopButton: TargetButton = {
-	id: id(2),
-	name: '4-Target Group - 2nd From Top',
-	image: 'images/brian.jpg',
-	videos: ['videos/brian1.mp4'],
-	dificulty: 0.5,
-};
-export const troughBallOneButton: Button = { id: id(3), name: 'Trough Ball 1', normallyClosed: true, dificulty: 0 };
-export const troughJamButton: Button = { id: id(4), name: 'Trough Jam', normallyClosed: true, dificulty: 0 };
-export const troughBallTwoButton: Button = { id: id(5), name: 'Trough Ball 2', normallyClosed: true, dificulty: 0 };
-export const troughBallThreeButton: Button = { id: id(6), name: 'Trough Ball 3', normallyClosed: true, dificulty: 0 };
-export const troughBallFourButton: Button = { id: id(7), name: 'Trough Ball 4', normallyClosed: true, dificulty: 0 };
-
-id = (pin: number) => buttonId({ board: lowerThirdNodeBoard, header: 2, pin });
-export const troughBallFiveButton: Button = { id: id(0), name: 'Trough Ball 5', normallyClosed: true, dificulty: 0 };
-export const plungerRolloverButton: Button = {
-	id: id(1),
-	name: 'Plunger Rollover',
-	normallyClosed: true,
-	dificulty: 0,
-};
-
-id = (pin: number) => buttonId({ board: upperThirdNodeBoard, header: 0, pin });
-export const middleBumperButton: Button = { id: id(0), name: 'Middle Bumper', dificulty: 0.7 };
-export const leftBumperButton: Button = { id: id(1), name: 'Left Bumper', dificulty: 0.9 };
-export const topRolloverInsideButton: Button = {
-	id: id(2),
-	name: 'Top Rollover Inside',
-	normallyClosed: true,
-	dificulty: 1,
-};
-export const topRolloverOutsideButton: Button = {
-	id: id(3),
-	name: 'Top Rollover Outside',
-	normallyClosed: true,
-	dificulty: 0.6,
-};
-export const topLeftTargetButton: TargetButton = {
-	id: id(4),
-	name: 'Top Left Target',
-	image: 'images/garage1.jpg',
-	videos: ['videos/garage1.mp4'],
-	dificulty: 1,
-};
-export const leftKickerButton: TargetButton = {
-	id: id(5),
-	name: 'Left Kicker',
-	normallyClosed: true,
-	image: 'images/garage2.jpg',
-	videos: ['videos/garage2.mp4'],
-	dificulty: 0.8,
-};
-
-id = (pin: number) => buttonId({ board: upperThirdNodeBoard, header: 1, pin });
 export const rightKickerButton: TargetButton = {
-	id: id(0),
+	id: id(6),
 	name: 'Right Kicker',
 	normallyClosed: true,
 	image: 'images/garage3.jpg',
 	videos: ['videos/garage3.mp4'],
 	dificulty: 0.8,
 };
-export const rightTargetButton: TargetButton = {
-	id: id(1),
-	name: 'Right Target',
-	image: 'images/garage4.jpg',
-	videos: ['videos/garage4.mp4'],
+export const rightBumperButton: Button = { id: id(7), name: 'Right Bumper', dificulty: 0.7 };
+
+id = (pin: number) => buttonId({ board: lowerThirdNodeBoard, header: 1, pin });
+export const fourTargetGroupFirstFromBottomButton: TargetButton = {
+	id: id(0),
+	name: '4-Target Group - 1st From Bottom',
+	image: 'images/mia.jpg',
+	videos: ['videos/mia1.mp4'],
 	dificulty: 0.5,
 };
-export const rightBumperButton: Button = { id: id(2), name: 'Right Bumper', dificulty: 0.7 };
-export const middleKickerButton: TargetButton = {
-	id: id(3),
-	name: 'Middle Kicker',
-	normallyClosed: true,
-	image: 'images/garage4.jpg',
-	videos: ['videos/domHome1.mp4'],
-	dificulty: 0.9,
+export const leftBumperButton: Button = { id: id(1), name: 'Left Bumper', dificulty: 0.9 };
+export const fourTargetGroupTopButton: TargetButton = {
+	id: id(2),
+	name: '4-Target Group - Top',
+	image: 'images/dom.jpg',
+	videos: ['videos/dom1.mp4'],
+	dificulty: 0.5,
 };
-export const topKickerButton: TargetButton = {
+export const fourTargetGroupBottomButton: TargetButton = {
+	id: id(3),
+	name: '4-Target Group - Bottom',
+	image: 'images/letty.jpg',
+	videos: ['videos/letty1.mp4'],
+	dificulty: 0.5,
+};
+export const fourTargetGroupFirstFromTopButton: TargetButton = {
 	id: id(4),
-	name: 'Top Kicker',
+	name: '4-Target Group - 1st From Top',
+	image: 'images/brian.jpg',
+	videos: ['videos/brian1.mp4'],
+	dificulty: 0.5,
+};
+
+// Header 2 on lower third node board is available, not used for anything.
+// id = (pin: number) => buttonId({ board: lowerThirdNodeBoard, header: 2, pin });
+
+id = (pin: number) => buttonId({ board: lowerThirdNodeBoard, header: 3, pin });
+export const troughJamButton: Button = { id: id(0), name: 'Trough Jam', normallyClosed: true, dificulty: 0 };
+export const troughBallOneButton: Button = { id: id(1), name: 'Trough Ball 1', normallyClosed: true, dificulty: 0 };
+export const troughBallTwoButton: Button = { id: id(2), name: 'Trough Ball 2', normallyClosed: true, dificulty: 0 };
+export const troughBallThreeButton: Button = { id: id(3), name: 'Trough Ball 3', normallyClosed: true, dificulty: 0 };
+export const troughBallFourButton: Button = { id: id(4), name: 'Trough Ball 4', normallyClosed: true, dificulty: 0 };
+export const troughBallFiveButton: Button = { id: id(5), name: 'Trough Ball 5', normallyClosed: true, dificulty: 0 };
+
+id = (pin: number) => buttonId({ board: upperThirdNodeBoard, header: 0, pin });
+export const topRightKickerButton: TargetButton = {
+	id: id(0),
+	name: 'Top Right Kicker',
 	normallyClosed: true,
 	image: 'images/garage1.jpg',
 	videos: ['videos/domHome1.mp4'],
 	dificulty: 0.9,
 };
-export const threeTargetGroupOutsideButton: TargetButton = {
-	id: id(5),
-	name: '3-Target Group - Outside',
+export const topRightTargetButton: TargetButton = {
+	id: id(1),
+	name: 'Top Right Target',
+	image: 'images/garage1.jpg',
+	videos: ['videos/garage1.mp4'],
+	dificulty: 1,
+};
+export const threeTargetGroupRightButton: TargetButton = {
+	id: id(2),
+	name: '3-Target Group - Right',
 	image: 'images/charger.jpg',
 	videos: ['videos/charger1.mp4'],
 	dificulty: 0.5,
 };
 export const threeTargetGroupCenterButton: TargetButton = {
-	id: id(6),
+	id: id(3),
 	name: '3-Target Group - Center',
 	image: 'images/skyline.jpg',
 	videos: ['videos/skyline1.mp4'],
 	dificulty: 0.5,
 };
-export const threeTargetGroupInsideButton: TargetButton = {
-	id: id(7),
-	name: '3-Target Group - Inside',
+export const threeTargetGroupLeftButton: TargetButton = {
+	id: id(4),
+	name: '3-Target Group - Left',
 	image: 'images/miacar.jpg',
 	videos: ['videos/miacar.mp4'],
 	dificulty: 0.5,
 };
+export const topRolloverButton: TargetButton = {
+	id: id(5),
+	name: 'Top Rollover',
+	normallyClosed: true,
+	image: 'images/dom.jpg',
+	videos: ['videos/dom1.mp4'],
+	dificulty: 0.9,
+};
+export const plungerRolloverButton: Button = {
+	id: id(6),
+	name: 'Plunger Rollover',
+	normallyClosed: true,
+	dificulty: 0,
+};
+
+id = (pin: number) => buttonId({ board: upperThirdNodeBoard, header: 1, pin });
+export const topKickerButton: TargetButton = {
+	id: id(0),
+	name: 'Top Kicker',
+	normallyClosed: true,
+	image: 'images/garage4.jpg',
+	videos: ['videos/domHome1.mp4'],
+	dificulty: 0.9,
+};
+export const leftTargetButton: TargetButton = {
+	id: id(1),
+	name: 'Left Target',
+	image: 'images/garage4.jpg',
+	videos: ['videos/garage4.mp4'],
+	dificulty: 0.5,
+};
+export const leftKickerButton: TargetButton = {
+	id: id(2),
+	name: 'Left Kicker',
+	normallyClosed: true,
+	image: 'images/garage2.jpg',
+	videos: ['videos/garage2.mp4'],
+	dificulty: 0.8,
+};
+export const middleBumperButton: Button = { id: id(3), name: 'Middle Bumper', dificulty: 0.7 };
 
 id = (pin: number) => buttonId({ board: cabinetNodeBoard, header: 0, pin });
 export const leftFlipperButtonButton: Button = { id: id(0), name: 'Left Flipper Button', dificulty: 0 };
@@ -192,21 +183,21 @@ export const beginTestButton: Button = { id: id(7), name: 'Begin Test', dificult
 
 export const driverButtons: ReadonlyArray<TargetButton> = [
 	fourTargetGroupTopButton,
-	fourTargetGroupSecondFromTopButton,
-	fourTargetGroupSecondFromBottomButton,
+	fourTargetGroupFirstFromTopButton,
+	fourTargetGroupFirstFromBottomButton,
 	fourTargetGroupBottomButton,
 ];
 export const carButtons: ReadonlyArray<TargetButton> = [
-	threeTargetGroupOutsideButton,
+	threeTargetGroupRightButton,
 	threeTargetGroupCenterButton,
-	threeTargetGroupInsideButton,
+	threeTargetGroupLeftButton,
 ];
-export const truckButtons: ReadonlyArray<TargetButton> = [topLeftTargetButton];
-export const stuntButtons: ReadonlyArray<TargetButton> = [leftMiddleRolloverButton];
+export const truckButtons: ReadonlyArray<TargetButton> = [topRightTargetButton];
+export const stuntButtons: ReadonlyArray<TargetButton> = [topRolloverButton];
 export const kickerButtons: ReadonlyArray<TargetButton> = [
 	leftKickerButton,
-	middleKickerButton,
 	topKickerButton,
+	topRightKickerButton,
 	rightKickerButton,
 ];
 export const bumperButtons: ReadonlyArray<Button> = [rightBumperButton, leftBumperButton, middleBumperButton];
@@ -236,11 +227,11 @@ const buttons: ReadonlyArray<Button> = [
 	rightFlipperEndOfStrokeButton,
 	rightSlingshotButton,
 	rightRolloverButton,
-	leftMiddleRolloverButton,
+	topRolloverButton,
 	fourTargetGroupTopButton,
 	fourTargetGroupBottomButton,
-	fourTargetGroupSecondFromBottomButton,
-	fourTargetGroupSecondFromTopButton,
+	fourTargetGroupFirstFromBottomButton,
+	fourTargetGroupFirstFromTopButton,
 	troughBallOneButton,
 	troughJamButton,
 	troughBallTwoButton,
@@ -250,18 +241,16 @@ const buttons: ReadonlyArray<Button> = [
 	plungerRolloverButton,
 	middleBumperButton,
 	leftBumperButton,
-	topRolloverInsideButton,
-	topRolloverOutsideButton,
-	topLeftTargetButton,
+	topRightTargetButton,
 	leftKickerButton,
 	rightKickerButton,
-	rightTargetButton,
+	leftTargetButton,
 	rightBumperButton,
-	middleKickerButton,
 	topKickerButton,
-	threeTargetGroupOutsideButton,
+	topRightKickerButton,
+	threeTargetGroupRightButton,
 	threeTargetGroupCenterButton,
-	threeTargetGroupInsideButton,
+	threeTargetGroupLeftButton,
 	leftFlipperButtonButton,
 	rightFlipperButtonButton,
 	startButtonButton,

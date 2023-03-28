@@ -1,10 +1,15 @@
 import Kicker from '@/engine/entities/Kicker';
-import { leftKickerButton, middleKickerButton, rightKickerButton, topKickerButton } from '../buttons/buttons';
-import { leftKickerCoil, topKickerCoil, middleKickerCoil, rightKickerCoil } from '../coils/coils';
+import { leftKickerButton, topKickerButton, rightKickerButton, topRightKickerButton } from '../buttons/buttons';
+import { leftKickerCoil, topRightKickerCoil, topKickerCoil, rightKickerCoil } from '../coils/coils';
 
 export const leftKicker: Kicker = {
 	coil: leftKickerCoil,
 	button: leftKickerButton,
+};
+
+export const topRightKicker: Kicker = {
+	coil: topRightKickerCoil,
+	button: topRightKickerButton,
 };
 
 export const topKicker: Kicker = {
@@ -12,14 +17,9 @@ export const topKicker: Kicker = {
 	button: topKickerButton,
 };
 
-export const middleKicker: Kicker = {
-	coil: middleKickerCoil,
-	button: middleKickerButton,
-};
-
 export const rightKicker: Kicker = {
 	coil: rightKickerCoil,
 	button: rightKickerButton,
 };
 
-export const kickers: Kicker[] = [leftKicker, topKicker, middleKicker, rightKicker];
+export const kickers: Kicker[] = [leftKicker, topRightKicker, topKicker, rightKicker];
