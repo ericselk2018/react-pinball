@@ -74,5 +74,5 @@ export default interface Game {
 			bluePercent: number;
 			fadeDurationInMilliseconds: number;
 		}[];
-	}) => Promise<void>;
+	}) => void;
 }
