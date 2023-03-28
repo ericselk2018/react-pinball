@@ -23,6 +23,7 @@ const start = async (args: {
 		latch,
 		modifyTrigger,
 		buttons: buttonState,
+		updateLights,
 	} = await hardware({
 		maxButtonId: Math.max(...buttons.map((button) => button.id)),
 		onButtonChange,
@@ -171,6 +172,7 @@ const start = async (args: {
 		enableOrDisableFlippers,
 		tapCoil,
 		buttons: buttonState,
+		updateLights,
 	};
 };
 

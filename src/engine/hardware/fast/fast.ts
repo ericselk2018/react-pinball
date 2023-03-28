@@ -7,11 +7,22 @@ const usbVendorId = 11914;
 const usbProductId = 4155;
 const hardwareModel = 8192;
 
-export const requestPort = async () => {
+// We only have one EXP board in our system, so to KISS the values are just hard-coded here.
+// FP-EXP-0081 is board that supports 256 LEDs and 0 servos
+// For FP-EXP-0071 that supports 156 LEDs and some servos, the value is B4.
+const expBoardType = '84';
+
+// If more than one board you can solder jumpers to give them unique IDs.  Our board doesn't have
+//  any jumpers soldered, so we use 0.
+const expBoardId = '0';
+
+// Forget all current ports and ask for two ports to be selected.  The NET and EXP ports must be selected.
+export const requestPorts = async () => {
 	const ports = await navigator.serial.getPorts();
 	for (const port of ports) {
 		await port.forget();
 	}
+	await navigator.serial.requestPort({ filters: [{ usbVendorId, usbProductId }] });
 	await navigator.serial.requestPort({ filters: [{ usbVendorId, usbProductId }] });
 };
 
@@ -20,15 +31,76 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 
 	return new Promise((resolve) => {
 		(async () => {
+			let net: { port: SerialPort; writer: WritableStreamDefaultWriter } | undefined = undefined;
+			let exp: { port: SerialPort; writer: WritableStreamDefaultWriter } | undefined = undefined;
+
+			const writeLineTo = async (args: { text: string; writer: WritableStreamDefaultWriter }) => {
+				const { text, writer } = args;
+				if (!text.startsWith('WD:')) {
+					console.log('write', text);
+				}
+				await writer.write(new TextEncoder().encode(text + '\r'));
+			};
+
+			const writeCommandTo = async (
+				writer: WritableStreamDefaultWriter,
+				command: string,
+				...args: Array<number | undefined>
+			) => {
+				const text = `${command}:${filterUndefined(args)
+					.map((arg) => toHex(arg))
+					.join(',')}`;
+				await writeLineTo({ text, writer });
+			};
+
 			const ports = await navigator.serial.getPorts();
-			if (ports.length !== 1) {
-				throw new Error(`Port count ${ports.length} not 1`);
+			for (const port of ports) {
+				await port.open({ baudRate: 921600 });
+				const writer = port.writable.getWriter();
+				const reader = port.readable.getReader();
+
+				// Clear port in case it was waiting for some previous command that never finished.
+				await writeLineTo({ text: Array(2048).fill(' ').join(''), writer });
+
+				await writeCommandTo(writer, 'ID');
+
+				let received = '';
+				while (true) {
+					const chunk = await reader.read();
+					const lines = (received + new TextDecoder().decode(chunk.value)).split('\r');
+					let id = '';
+					for (let index = 0; index < lines.length - 1; index++) {
+						const line = lines[index];
+						console.log('read', line);
+						if (line.startsWith('ID:NET')) {
+							id = 'net';
+							break;
+						} else if (line.startsWith('ID:EXP')) {
+							id = 'exp';
+							break;
+						}
+					}
+					if (id === 'net') {
+						net = { port, writer };
+						break;
+					} else if (id === 'exp') {
+						exp = { port, writer };
+						break;
+					}
+					received = lines[lines.length - 1];
+				}
+
+				reader.releaseLock();
 			}
 
-			const port = ports[0];
-			await port.open({ baudRate: 921600 });
+			if (!net) {
+				throw new Error(`NET port not found`);
+			}
+			if (!exp) {
+				throw new Error(`EXP port not found`);
+			}
 
-			const writer = port.writable.getWriter();
+			const { port, writer } = net;
 
 			// Zero padding and uppercase doesn't seem to be needed,
 			//  but it makes things match the docs and maybe easier to read in logs.
@@ -42,23 +114,17 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 
 			const percentToByteValue = (value: number) => Math.round(clamp({ value, min: 0, max: 1 }) * 255);
 
-			const writeLine = async (args: { text: string }) => {
-				const { text } = args;
-				if (!text.startsWith('WD:')) {
-					console.log('write', text);
-				}
-				await writer.write(new TextEncoder().encode(text + '\r'));
-			};
+			const millisecondsPerTick = 32;
+			const millisecondsToTickByteValue = (value: number) =>
+				clamp({ value: Math.round(value / millisecondsPerTick), min: 0, max: 255 });
+
+			const writeLine = async (args: { text: string }) => writeLineTo({ ...args, writer });
 
 			const writeCommand = async (command: string, ...args: Array<number | undefined>) => {
 				const text = `${command}:${filterUndefined(args)
 					.map((arg) => toHex(arg))
 					.join(',')}`;
 				await writeLine({ text });
-			};
-
-			const clear = async () => {
-				await writeLine({ text: Array(2048).fill(' ').join('') });
 			};
 
 			const configureHardware = async () => {
@@ -212,6 +278,38 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 				);
 			};
 
+			const updateLights = async (args: {
+				updates: {
+					id: number;
+					redPercent: number;
+					greenPercent: number;
+					bluePercent: number;
+					fadeDurationInMilliseconds: number;
+				}[];
+			}) => {
+				const { updates } = args;
+				const count = updates.length;
+				if (exp) {
+					const { writer } = exp;
+					await writer.write(Buffer.from(`RL@${expBoardType}${expBoardId}:`));
+					await writer.write(Uint8Array.from([count]));
+					for (const update of updates) {
+						const { id, redPercent, greenPercent, bluePercent, fadeDurationInMilliseconds } = update;
+						await writer.write(
+							Buffer.from(
+								Uint8Array.from([
+									id,
+									percentToByteValue(redPercent),
+									percentToByteValue(greenPercent),
+									percentToByteValue(bluePercent),
+									millisecondsToTickByteValue(fadeDurationInMilliseconds),
+								])
+							)
+						);
+					}
+				}
+			};
+
 			let received = '';
 			port.readable.pipeTo(
 				new WritableStream({
@@ -244,6 +342,7 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 										latch,
 										modifyTrigger,
 										configurePulse,
+										updateLights,
 									});
 								} else if (line.startsWith('/L:') || line.startsWith('-L:')) {
 									const closed = line[0] === '-';
@@ -256,7 +355,6 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 				})
 			);
 
-			await clear();
 			await configureHardware();
 			await getButtonStates();
 

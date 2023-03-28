@@ -90,6 +90,10 @@ const keyboard: Hardware = (args: HardwareRequest): Promise<HardwareResponse> =>
 			return Promise.resolve();
 		};
 
+		const updateLights = () => {
+			return Promise.resolve();
+		};
+
 		resolve({
 			buttons: Array(maxButtonId + 1)
 				.fill(0)
@@ -104,6 +108,7 @@ const keyboard: Hardware = (args: HardwareRequest): Promise<HardwareResponse> =>
 			configurePulse,
 			latch,
 			modifyTrigger,
+			updateLights,
 		});
 	});
 };

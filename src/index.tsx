@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import NotPlaying from './components/not-playing/not-playing';
 import Playing from './components/playing/playing';
 import Game from './engine/entities/Game';
-import fast, { requestPort } from './engine/hardware/fast/fast';
+import fast, { requestPorts } from './engine/hardware/fast/fast';
 import keyboard from './engine/hardware/keyboard/keyboard';
 import run from './engine/run/run';
 import * as S from './index.styles';
@@ -49,7 +49,7 @@ const App = () => {
 	}
 
 	if (!game) {
-		return <img onClick={requestPort} style={{ width: '100%' }} src="./images/startup.jpg" />;
+		return <img onClick={requestPorts} style={{ width: '100%' }} src="./images/startup.jpg" />;
 	}
 
 	return <pre>{JSON.stringify(game, undefined, '\t')}</pre>;

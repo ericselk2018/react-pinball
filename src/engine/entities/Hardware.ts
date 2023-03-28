@@ -32,6 +32,15 @@ export interface HardwareResponse {
 		pulseTimeInMilliseconds: number;
 		restTimeInMilliseconds: number;
 	}) => Promise<void>;
+	updateLights: (args: {
+		updates: {
+			id: number;
+			redPercent: number;
+			greenPercent: number;
+			bluePercent: number;
+			fadeDurationInMilliseconds: number;
+		}[];
+	}) => Promise<void>;
 }
 
 export interface HardwareRequest {
