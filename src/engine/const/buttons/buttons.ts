@@ -155,21 +155,21 @@ export const topKickerButton: TargetButton = {
 	dificulty: 0.9,
 };
 export const leftTargetButton: TargetButton = {
-	id: id(1),
+	id: id(3),
 	name: 'Left Target',
 	image: 'images/garage4.jpg',
 	videos: ['videos/garage4.mp4'],
 	dificulty: 0.5,
 };
 export const leftKickerButton: TargetButton = {
-	id: id(2),
+	id: id(4),
 	name: 'Left Kicker',
 	normallyClosed: true,
 	image: 'images/garage2.jpg',
 	videos: ['videos/garage2.mp4'],
 	dificulty: 0.8,
 };
-export const middleBumperButton: Button = { id: id(3), name: 'Middle Bumper', dificulty: 0.7 };
+export const middleBumperButton: Button = { id: id(5), name: 'Middle Bumper', dificulty: 0.7 };
 
 id = (pin: number) => buttonId({ board: cabinetNodeBoard, header: 0, pin });
 export const leftFlipperButtonButton: Button = { id: id(0), name: 'Left Flipper Button', dificulty: 0 };
