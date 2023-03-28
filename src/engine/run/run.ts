@@ -6,6 +6,7 @@ import Game, { OptionsMenuOption, SelectedGameSetupMenuOption, Status } from '..
 import Hardware from '../entities/Hardware';
 import HighScore from '../entities/HighScore';
 import Player from '../entities/Player';
+import lightUpdater from '../light-updater/light-updater';
 import rules from '../rules/rules';
 import start from '../start/start';
 
@@ -26,7 +27,12 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		}
 	};
 
-	const { buttons: buttonState, enableOrDisableFlippers, tapCoil } = await start({ hardware, onButtonChange });
+	const {
+		buttons: buttonState,
+		enableOrDisableFlippers,
+		tapCoil,
+		updateLights,
+	} = await start({ hardware, onButtonChange });
 
 	const startTurn = () => {
 		const { log } = game;
@@ -236,6 +242,7 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		shots: [],
 		highScores,
 		endGame,
+		updateLights,
 	};
 
 	let inactiveTimeout: number | undefined = undefined;
@@ -256,7 +263,11 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 
 		game.error = '';
 
+		const lightUpdate = lightUpdater({ game });
+
 		rules.forEach((rule) => rule({ game }));
+
+		lightUpdate.update();
 
 		onUpdate({ game });
 

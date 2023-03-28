@@ -66,4 +66,13 @@ export default interface Game {
 	readonly creditsNeeded: number;
 	readonly shots: Shot[];
 	readonly highScores: HighScore[];
+	readonly updateLights: (args: {
+		updates: {
+			id: number;
+			redPercent: number;
+			greenPercent: number;
+			bluePercent: number;
+			fadeDurationInMilliseconds: number;
+		}[];
+	}) => Promise<void>;
 }
