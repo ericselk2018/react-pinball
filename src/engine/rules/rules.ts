@@ -40,6 +40,7 @@ const rules: Rule[] = [
 	readyToPlay,
 	clearKickersOnStart,
 	playOnStart,
+	showNotReadyToStart,
 	showGameSetup,
 	waitingForLaunch,
 	modeSelect,
@@ -62,7 +63,6 @@ const rules: Rule[] = [
 	selectLights,
 	hideOptions,
 	selectGameSetupOption,
-	showNotReadyToStart,
 ];
 
 export default rules;
