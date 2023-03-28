@@ -1,3 +1,4 @@
+import { targetButtons } from '@/engine/const/buttons/buttons';
 import Hardware, { HardwareRequest, HardwareResponse } from '@/engine/entities/Hardware';
 import { filterUndefined } from '@/lib/array/array';
 import { bitTest, clamp } from '@/lib/math/math';
@@ -291,20 +292,18 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 				const count = updates.length;
 				if (exp) {
 					const { writer } = exp;
-					await writer.write(Buffer.from(`RL@${expBoardType}${expBoardId}:`));
+					await writer.write(new TextEncoder().encode(`RL@${expBoardType}${expBoardId}:`));
 					await writer.write(Uint8Array.from([count]));
 					for (const update of updates) {
 						const { id, redPercent, greenPercent, bluePercent, fadeDurationInMilliseconds } = update;
 						await writer.write(
-							Buffer.from(
-								Uint8Array.from([
-									id,
-									percentToByteValue(redPercent),
-									percentToByteValue(greenPercent),
-									percentToByteValue(bluePercent),
-									millisecondsToTickByteValue(fadeDurationInMilliseconds),
-								])
-							)
+							Uint8Array.from([
+								id,
+								percentToByteValue(redPercent),
+								percentToByteValue(greenPercent),
+								percentToByteValue(bluePercent),
+								millisecondsToTickByteValue(fadeDurationInMilliseconds),
+							])
 						);
 					}
 				}
@@ -357,6 +356,17 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 
 			await configureHardware();
 			await getButtonStates();
+
+			// Turn off all lights in case any where left
+			await updateLights({
+				updates: targetButtons.map((button) => ({
+					id: button.lightId,
+					redPercent: 0,
+					greenPercent: 0,
+					bluePercent: 0,
+					fadeDurationInMilliseconds: 0,
+				})),
+			});
 
 			setInterval(() => {
 				setWatchdog({ timeoutInMilliseconds: 1000 });
