@@ -15,9 +15,7 @@ const clearKickersOnStart: Rule = ({ game }) => {
 
 	if (kickersWithBalls.length) {
 		log(`clearing kickers with balls: ${kickersWithBalls.map((k) => k.button.name).join(', ')}`);
-		for (const kicker of kickersWithBalls) {
-			tapCoil({ coil: kicker.coil });
-		}
+		kickersWithBalls.forEach((kicker) => tapCoil({ coil: kicker.coil }));
 	}
 };
 
