@@ -23,6 +23,7 @@ import selectOption from './select-option/select-option';
 import selectSong from './select-song/select-song';
 import setVolume from './set-volume/set-volume';
 import showGameSetup from './show-game-setup/show-game-setup';
+import showNotReadyToStart from './show-not-ready-to-start/show-not-ready-to-start';
 import showOptions from './show-options/show-options';
 import startNextGame from './start-next-game/start-next-game';
 import toggleHighScores from './toggle-high-scores/toggle-high-scores';
@@ -61,6 +62,7 @@ const rules: Rule[] = [
 	selectLights,
 	hideOptions,
 	selectGameSetupOption,
+	showNotReadyToStart,
 ];
 
 export default rules;

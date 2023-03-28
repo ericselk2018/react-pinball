@@ -55,7 +55,7 @@ export default interface Game {
 	startNextGame: () => void;
 	nextPlayer: () => void;
 	song: number;
-	showingMenu: 'options' | 'game-setup' | undefined;
+	showingMenu: 'options' | 'game-setup' | 'not-ready-to-start' | undefined;
 	selectedMenuOption: number;
 	volume: number;
 	showingMenuDetails: boolean;

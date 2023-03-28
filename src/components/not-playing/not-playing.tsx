@@ -15,8 +15,10 @@ const NotPlaying = (props: Props) => {
 			<S.Video src="videos/attract.mp4" autoPlay={true} loop={true} muted={true} />
 			{showingMenu === 'options' ? (
 				<Options game={game} />
+			) : showingMenu === 'game-setup' ? (
+				<GameSetup game={game} />
 			) : (
-				showingMenu === 'game-setup' && <GameSetup game={game} />
+				showingMenu === 'not-ready-to-start' && <NotReadyToStart game={game} />
 			)}
 		</S.Container>
 	);
