@@ -12,4 +12,5 @@ export const Container = styled.div`
 	top: 0;
 	bottom: 0;
 	background-color: rgba(0, 0, 0, 0.6);
+	padding: 100px;
 `;
