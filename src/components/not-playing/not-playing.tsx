@@ -1,5 +1,6 @@
 import Game from '@/engine/entities/Game';
 import GameSetup from '../game-setup/game-setup';
+import NotReadyToStart from '../not-ready-to-start/not-ready-to-start';
 import Options from '../options/options';
 import * as S from './not-playing.styles';
 
