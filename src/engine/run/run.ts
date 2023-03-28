@@ -72,7 +72,11 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 	};
 
 	const getCurrentModeStep = () => {
-		const { currentMode, modeStepButtonsHitThisTurn } = game;
+		const { currentMode, modeStepButtonsHitThisTurn, status } = game;
+		if (status !== 'playing' && status !== 'waitingForNextPlayer' && status !== 'waitingForLaunch') {
+			return;
+		}
+
 		const modeSteps = currentMode.steps.map((step) => {
 			return {
 				...step,
@@ -267,7 +271,7 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 
 		rules.forEach((rule) => rule({ game }));
 
-		lightUpdate.update();
+		lightUpdate.update({ game });
 
 		onUpdate({ game });
 
