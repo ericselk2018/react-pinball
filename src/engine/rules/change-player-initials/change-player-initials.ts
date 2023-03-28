@@ -5,9 +5,14 @@ import { changeLetterAt } from '@/lib/string/string';
 
 // Allow changing player initials with flipper buttons when selected during pre-game setup.
 const changePlayerInitials: Rule = ({ game }) => {
-	const { players, status, selectedMenuOption, pressedButton } = game;
+	const { players, status, selectedMenuOption, pressedButton, showingMenu } = game;
 
-	if (status !== 'readyToPlay') {
+	if (
+		status === 'playing' ||
+		status === 'waitingForLaunch' ||
+		status === 'waitingForNextPlayer' ||
+		showingMenu !== 'game-setup'
+	) {
 		return;
 	}
 
