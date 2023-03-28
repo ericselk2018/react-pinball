@@ -1,12 +1,10 @@
 import { usedTroughButtons } from '@/engine/const/buttons/buttons';
-import Game from '@/engine/entities/Game';
 import Rule from '@/engine/entities/Rule';
 
 // Transition from starting to read-to-play when buttons are in required state:
 //  All balls are in trough in the expected location.
 //  All buttons are in their normal state - none pressed except trough slots with balls.
-const readyToPlay: Rule = (args: { game: Game }) => {
-	const { game } = args;
+const readyToPlay: Rule = ({ game }) => {
 	const { pressedButtons, status, log } = game;
 
 	if (status !== 'starting') {
