@@ -24,6 +24,7 @@ const playOnStart: Rule = ({ game }) => {
 		tapCoil({ coil: troughBallEjectCoil });
 		game.ballsInPlay++;
 		game.currentPlayer.ballsUsed++;
+		game.credits -= game.creditsRequired;
 		game.startTurn();
 		log('started play');
 	}
