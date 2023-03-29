@@ -13,7 +13,7 @@ import Slingshot from '../entities/Slingshot';
 // Starts hardware and does initial configuration.
 const start = async (args: {
 	hardware: Hardware;
-	onButtonChange: (args: { buttonId: number; closed: boolean }) => void;
+	onButtonChange: (args: { buttonId: number; closed: boolean }) => Promise<void>;
 }) => {
 	const { onButtonChange, hardware } = args;
 
@@ -69,7 +69,7 @@ const start = async (args: {
 			},
 			enterButtonId: buttonButton.id,
 			exitButtonId: endOfStrokeButton.id,
-			fullPowerTimeInMilliseconds: 30,
+			fullPowerTimeInMilliseconds: 15,
 			partialPowerPercent: 0,
 			partialPowerTimeInDeciseconds: 0,
 			restTimeInMilliseconds: 90,
@@ -97,7 +97,7 @@ const start = async (args: {
 			coilId: coil.id,
 			buttonId: button.id,
 			buttonCondition: !button.normallyClosed,
-			pulsePowerPercent: 1,
+			pulsePowerPercent: 0.6,
 			pulseTimeInMilliseconds: 30,
 			restTimeInMilliseconds: 90,
 		});
@@ -119,7 +119,7 @@ const start = async (args: {
 		//  at startup, we kick it out now, to get game ready for play ASAP.
 		const kickerButton = buttonState.find((b) => button.id === b.id);
 		if (kickerButton && kickerButton.closed !== !!button.normallyClosed) {
-			await tapCoil({ coil });
+			tapCoil({ coil });
 		}
 	};
 
@@ -128,8 +128,8 @@ const start = async (args: {
 
 		await configurePulse({
 			coilId: coil.id,
-			pulsePowerPercent: 1,
-			pulseTimeInMilliseconds: 30,
+			pulsePowerPercent: 0.8,
+			pulseTimeInMilliseconds: 90,
 			restTimeInMilliseconds: 90,
 		});
 	};
