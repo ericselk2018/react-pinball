@@ -9,7 +9,7 @@ export interface HardwareResponse {
 		partialPowerTimeInDeciseconds: number;
 		partialPowerPercent: number;
 		restTimeInMilliseconds: number;
-	}) => Promise<void>;
+	}) => void;
 	latch: (args: {
 		coilId: number;
 		buttonCondition: boolean;
@@ -18,12 +18,8 @@ export interface HardwareResponse {
 		kickPowerPercent: number;
 		latchPowerPercent: number;
 		restTimeInMilliseconds: number;
-	}) => Promise<void>;
-	modifyTrigger: (args: {
-		coilId: number;
-		control: 'auto' | 'tap' | 'off' | 'on';
-		buttonId?: number;
-	}) => Promise<void>;
+	}) => void;
+	modifyTrigger: (args: { coilId: number; control: 'auto' | 'tap' | 'off' | 'on'; buttonId?: number }) => void;
 	configurePulse: (args: {
 		coilId: number;
 		buttonId?: number;
@@ -31,7 +27,7 @@ export interface HardwareResponse {
 		pulsePowerPercent: number;
 		pulseTimeInMilliseconds: number;
 		restTimeInMilliseconds: number;
-	}) => Promise<void>;
+	}) => void;
 	updateLights: (args: {
 		updates: {
 			id: number;
@@ -40,7 +36,7 @@ export interface HardwareResponse {
 			bluePercent: number;
 			fadeDurationInMilliseconds: number;
 		}[];
-	}) => Promise<void>;
+	}) => void;
 }
 
 export interface HardwareRequest {

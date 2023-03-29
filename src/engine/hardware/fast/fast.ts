@@ -17,6 +17,10 @@ const expBoardType = '84';
 //  any jumpers soldered, so we use 0.
 const expBoardId = '0';
 
+interface SyncWriter {
+	write: (chunk: Uint8Array) => void;
+}
+
 // Forget all current ports and ask for two ports to be selected.  The NET and EXP ports must be selected.
 export const requestPorts = async () => {
 	const ports = await navigator.serial.getPorts();
@@ -32,38 +36,62 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 
 	return new Promise((resolve) => {
 		(async () => {
-			let net: { port: SerialPort; writer: WritableStreamDefaultWriter } | undefined = undefined;
-			let exp: { port: SerialPort; writer: WritableStreamDefaultWriter } | undefined = undefined;
+			let net: { port: SerialPort; writer: SyncWriter } | undefined = undefined;
+			let exp: { port: SerialPort; writer: SyncWriter } | undefined = undefined;
 
-			const writeLineTo = async (args: { text: string; writer: WritableStreamDefaultWriter }) => {
+			// Create a synchronous writer.  A thin wrapper around the native stream writer.
+			//  Synchronous is so much easier to design around -- KISS
+			const syncWriter = (writer: WritableStreamDefaultWriter): SyncWriter => {
+				let buffer: Uint8Array | undefined = undefined;
+				let writing = false;
+				return {
+					write: (chunk) => {
+						// We just keep a buffer of the chunks to write in the order given.
+						buffer = buffer ? new Uint8Array([...buffer, ...chunk]) : chunk;
+
+						// If not already waiting for a previous write to complete, we start a new write now.
+						if (!writing) {
+							const write = () => {
+								writing = !!buffer;
+								if (writing) {
+									// Write current buffer and then clear it.
+									// Call write again after buffer is writtin, which will write anything else
+									//  added to buffer while we were waiting, or do nothing if nothing new added yet.
+									writer.write(buffer).then(write);
+									buffer = undefined;
+								}
+							};
+							write();
+						}
+					},
+				};
+			};
+
+			const writeLineTo = (args: { text: string; writer: SyncWriter }) => {
 				const { text, writer } = args;
 				if (!text.startsWith('WD:')) {
 					console.log('write', text);
 				}
-				await writer.write(new TextEncoder().encode(text + '\r'));
+				writer.write(new TextEncoder().encode(text + '\r'));
 			};
 
-			const writeCommandTo = async (
-				writer: WritableStreamDefaultWriter,
-				command: string,
-				...args: Array<number | undefined>
-			) => {
+			const writeCommandTo = (writer: SyncWriter, command: string, ...args: Array<number | undefined>) => {
 				const text = `${command}:${filterUndefined(args)
 					.map((arg) => toHex(arg))
 					.join(',')}`;
-				await writeLineTo({ text, writer });
+				writeLineTo({ text, writer });
 			};
 
 			const ports = await navigator.serial.getPorts();
 			for (const port of ports) {
 				await port.open({ baudRate: 921600 });
-				const writer = port.writable.getWriter();
+				const writer = syncWriter(port.writable.getWriter());
 				const reader = port.readable.getReader();
 
 				// Clear port in case it was waiting for some previous command that never finished.
-				await writeLineTo({ text: Array(2048).fill(' ').join(''), writer });
+				writeLineTo({ text: Array(2048).fill(' ').join(''), writer });
 
-				await writeCommandTo(writer, 'ID');
+				writeCommandTo(writer, 'ID');
 
 				let received = '';
 				while (true) {
@@ -119,26 +147,26 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 			const millisecondsToTickByteValue = (value: number) =>
 				clamp({ value: Math.round(value / millisecondsPerTick), min: 0, max: 255 });
 
-			const writeLine = async (args: { text: string }) => writeLineTo({ ...args, writer });
+			const writeLine = (args: { text: string }) => writeLineTo({ ...args, writer });
 
-			const writeCommand = async (command: string, ...args: Array<number | undefined>) => {
+			const writeCommand = (command: string, ...args: Array<number | undefined>) => {
 				const text = `${command}:${filterUndefined(args)
 					.map((arg) => toHex(arg))
 					.join(',')}`;
-				await writeLine({ text });
+				writeLine({ text });
 			};
 
-			const configureHardware = async () => {
-				await writeCommand('CH', hardwareModel, 1);
+			const configureHardware = () => {
+				writeCommand('CH', hardwareModel, 1);
 			};
 
-			const getButtonStates = async () => {
-				await writeCommand('SA');
+			const getButtonStates = () => {
+				writeCommand('SA');
 			};
 
-			const setWatchdog = async (args: { timeoutInMilliseconds: number }) => {
+			const setWatchdog = (args: { timeoutInMilliseconds: number }) => {
 				const { timeoutInMilliseconds } = args;
-				await writeCommand('WD', timeoutInMilliseconds);
+				writeCommand('WD', timeoutInMilliseconds);
 			};
 
 			const triggerFlags = {
@@ -157,7 +185,7 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 				pulseWithCancelButton: 0x75,
 			};
 
-			const configureAutoTriggeredDiverter = async (args: {
+			const configureAutoTriggeredDiverter = (args: {
 				coilId: number;
 				enterButtonId: number;
 				exitButtonId: number;
@@ -183,7 +211,7 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 					(enterButtonCondition ? 0 : triggerFlags.invertButtonOne) |
 					(exitButtonCondition ? 0 : triggerFlags.invertButtonTwo);
 				const coilMode = modes.pulseWithCancelButton;
-				await writeCommand(
+				writeCommand(
 					'DL',
 					coilId,
 					triggerValue,
@@ -197,7 +225,7 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 				);
 			};
 
-			const latch = async (args: {
+			const latch = (args: {
 				coilId: number;
 				buttonCondition: boolean;
 				buttonId: number;
@@ -217,7 +245,7 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 				} = args;
 				const triggerValue = triggerFlags.enable | (buttonCondition ? 0 : triggerFlags.invertButtonOne);
 				const coilMode = modes.pulseAndHold;
-				await writeCommand(
+				writeCommand(
 					'DL',
 					coilId,
 					triggerValue,
@@ -231,17 +259,17 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 				);
 			};
 
-			const modifyTrigger = async (args: {
+			const modifyTrigger = (args: {
 				coilId: number;
 				control: 'auto' | 'tap' | 'off' | 'on';
 				buttonId?: number;
 			}) => {
 				const { coilId, control, buttonId } = args;
 				const controlValue = control === 'auto' ? 0 : control === 'tap' ? 1 : control === 'off' ? 2 : /*on*/ 3;
-				await writeCommand('TL', coilId, controlValue, buttonId);
+				writeCommand('TL', coilId, controlValue, buttonId);
 			};
 
-			const configurePulse = async (args: {
+			const configurePulse = (args: {
 				coilId: number;
 				buttonId?: number;
 				buttonCondition?: boolean;
@@ -265,7 +293,7 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 						: buttonCondition
 						? 0
 						: triggerFlags.invertButtonOne);
-				await writeCommand(
+				writeCommand(
 					'DL',
 					coilId,
 					triggerValue,
@@ -279,7 +307,7 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 				);
 			};
 
-			const updateLights = async (args: {
+			const updateLights = (args: {
 				updates: {
 					id: number;
 					redPercent: number;
@@ -292,11 +320,11 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 				const count = updates.length;
 				if (exp) {
 					const { writer } = exp;
-					await writer.write(new TextEncoder().encode(`RL@${expBoardType}${expBoardId}:`));
-					await writer.write(Uint8Array.from([count]));
+					writer.write(new TextEncoder().encode(`RL@${expBoardType}${expBoardId}:`));
+					writer.write(Uint8Array.from([count]));
 					for (const update of updates) {
 						const { id, redPercent, greenPercent, bluePercent, fadeDurationInMilliseconds } = update;
-						await writer.write(
+						writer.write(
 							Uint8Array.from([
 								id,
 								percentToByteValue(redPercent),
@@ -354,11 +382,11 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 				})
 			);
 
-			await configureHardware();
-			await getButtonStates();
+			configureHardware();
+			getButtonStates();
 
 			// Turn off all lights in case any where left
-			await updateLights({
+			updateLights({
 				updates: targetButtons.map((button) => ({
 					id: button.lightId,
 					redPercent: 0,
