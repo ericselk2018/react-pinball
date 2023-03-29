@@ -45,6 +45,7 @@ describe('rules', () => {
 			shots: [],
 			highScores: [],
 			endGame: jest.fn(),
+			updateLights: jest.fn(),
 		};
 		rules.forEach((rule) => rule({ game }));
 
