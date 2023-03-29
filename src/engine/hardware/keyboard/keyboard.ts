@@ -75,23 +75,23 @@ const keyboard: Hardware = (args: HardwareRequest): Promise<HardwareResponse> =>
 
 	return new Promise((resolve) => {
 		const configureAutoTriggeredDiverter = () => {
-			return Promise.resolve();
+			//
 		};
 
 		const configurePulse = () => {
-			return Promise.resolve();
+			//
 		};
 
 		const latch = () => {
-			return Promise.resolve();
+			//
 		};
 
 		const modifyTrigger = () => {
-			return Promise.resolve();
+			//
 		};
 
 		const updateLights = () => {
-			return Promise.resolve();
+			//
 		};
 
 		resolve({
