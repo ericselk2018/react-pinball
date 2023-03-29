@@ -140,7 +140,6 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 			playSong();
 		});
 	};
-	playSong();
 
 	const addPlayer = () => {
 		const { players } = game;
@@ -207,7 +206,7 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 			}
 		},
 		error: '',
-		credits: 0,
+		credits: 100,
 		players: [player1, player2],
 		currentPlayer: player1,
 		pressedButtons: [],
@@ -295,6 +294,7 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		global.game = game;
 	};
 
+	playSong();
 	runRules();
 };
 
