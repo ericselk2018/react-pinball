@@ -49,7 +49,7 @@ const Mode = (props: Props) => {
 						{steps.map((step, index) => {
 							const { name, buttons, count } = step;
 							const completedButtons = buttons.filter((button) =>
-								modeStepButtonsHitThisTurn.some((b) => b.name === name && b.id === button.id)
+								modeStepButtonsHitThisTurn.some((b) => b.id === button.id)
 							);
 							return (
 								<S.Step
