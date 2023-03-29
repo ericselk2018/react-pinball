@@ -73,7 +73,7 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 
 	const getCurrentModeStep = () => {
 		const { currentMode, modeStepButtonsHitThisTurn, status } = game;
-		if (status !== 'playing' && status !== 'waitingForNextPlayer' && status !== 'waitingForLaunch') {
+		if (status !== 'playing' && status !== 'waitingForLaunch') {
 			return;
 		}
 
@@ -112,6 +112,8 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		} else {
 			game.currentPlayer = players[currentPlayerIndex + 1];
 		}
+		game.buttonsPressedThisTurn.length = 0;
+		game.modeStepButtonsHitThisTurn.length = 0;
 		log(`player changed to ${game.currentPlayer.initials}`);
 	};
 

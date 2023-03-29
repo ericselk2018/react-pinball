@@ -17,7 +17,7 @@ const kickOrHoldBall: Rule = ({ game }) => {
 		return;
 	}
 
-	if (kickersWithBalls.length + 1 === totalBallsInMachine || kickersWithBalls.length === kickers.length) {
+	if (kickersWithBalls.length + 1 === totalBallsInMachine || kickersWithBalls.length + 1 === kickers.length) {
 		log(
 			`kickers full - ejecting balls from kickers ${[kicker, ...kickersWithBalls]
 				.map((kicker) => kicker.button.name)
