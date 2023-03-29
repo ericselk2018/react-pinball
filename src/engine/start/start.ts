@@ -13,7 +13,7 @@ import Slingshot from '../entities/Slingshot';
 // Starts hardware and does initial configuration.
 const start = async (args: {
 	hardware: Hardware;
-	onButtonChange: (args: { buttonId: number; closed: boolean }) => Promise<void>;
+	onButtonChange: (args: { buttonId: number; closed: boolean }) => void;
 }) => {
 	const { onButtonChange, hardware } = args;
 
