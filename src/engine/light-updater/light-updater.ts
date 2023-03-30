@@ -1,8 +1,11 @@
 import { targetButtons } from '../const/buttons/buttons';
 import Game from '../entities/Game';
+import Song from '../entities/Song';
+import lightShow from '../light-show/light-show';
 
 let blinkInterval: number | undefined = undefined;
 let blinkOn = false;
+let currentLightShow: { abortController: AbortController; song: Song } | undefined = undefined;
 
 const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 	const { status: previousStatus, currentModeStep } = previousGame;
@@ -32,7 +35,7 @@ const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 						const colorPercent = game.buttonsPressedThisTurn.some((b) => b.id === button.id) ? 1 : 0;
 						const fadeDurationInMilliseconds = 100;
 						return {
-							id: button.lightId,
+							id: button.light.id,
 							redPercent: colorPercent,
 							greenPercent: colorPercent,
 							bluePercent: colorPercent,
@@ -56,7 +59,7 @@ const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 					blinkOn = !blinkOn;
 					game.updateLights({
 						updates: modeStepTargetButtons.map((button) => ({
-							id: button.lightId,
+							id: button.light.id,
 							redPercent: colorPercent,
 							greenPercent: colorPercent,
 							bluePercent: colorPercent,
@@ -78,7 +81,7 @@ const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 			game.updateLights({
 				updates: [
 					{
-						id: pressedTargetButton.lightId,
+						id: pressedTargetButton.light.id,
 						redPercent: 1,
 						greenPercent: 1,
 						bluePercent: 1,
@@ -94,7 +97,7 @@ const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 				const fadeDurationInMilliseconds = 100;
 				game.updateLights({
 					updates: targetButtons.map((button) => ({
-						id: button.lightId,
+						id: button.light.id,
 						redPercent: 0,
 						greenPercent: 0,
 						bluePercent: 0,
@@ -102,6 +105,35 @@ const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 					})),
 				});
 			}
+		}
+
+		// Play light show for current song while not playing.
+		if (game.status === 'gameOver' || game.status === 'starting' || game.status === 'readyToPlay') {
+			// If song changes we need to stop current light show.
+			if (currentLightShow && currentLightShow.song !== game.song) {
+				currentLightShow.abortController.abort();
+				currentLightShow = undefined;
+			}
+
+			if (!currentLightShow) {
+				currentLightShow = {
+					abortController: new AbortController(),
+					song: game.song,
+				};
+
+				// Start time is based on start of song, so that light show is in sync with song (if the show itself was designed well).
+				// PLAY-TEST: It might look funny if a show doesn't always start at the beginning, in which case we may need to restart
+				//  the song when the light show starts, instead of starting the light show at a time that matches the already playing song.
+				lightShow({
+					game,
+					show: currentLightShow.song.lightShow,
+					abortSignal: currentLightShow.abortController.signal,
+					startTimeInMilliseconds: game.secondsSinceSongStarted * 1000,
+				});
+			}
+		} else if (currentLightShow) {
+			currentLightShow.abortController.abort();
+			currentLightShow = undefined;
 		}
 	};
 

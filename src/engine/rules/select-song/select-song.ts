@@ -6,17 +6,18 @@ import Rule from '@/engine/entities/Rule';
 const selectSong: Rule = ({ game }) => {
 	const { showingMenu, selectedMenuOption, pressedButton, song } = game;
 	if (showingMenu === 'options' && selectedMenuOption === OptionsMenuOption.song) {
+		const songIndex = songs.indexOf(song);
 		if (pressedButton?.id === leftFlipperButtonButton.id) {
-			if (song) {
-				game.song--;
+			if (songIndex) {
+				game.song = songs[songIndex - 1];
 			} else {
-				game.song = songs.length - 1;
+				game.song = songs[songs.length - 1];
 			}
 		} else if (pressedButton?.id === rightFlipperButtonButton.id) {
-			if (song < songs.length - 1) {
-				game.song++;
+			if (songIndex < songs.length - 1) {
+				game.song = songs[songIndex + 1];
 			} else {
-				game.song = 0;
+				game.song = songs[0];
 			}
 		}
 	}

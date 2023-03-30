@@ -1,4 +1,4 @@
-import { targetButtons } from '@/engine/const/buttons/buttons';
+import lights from '@/engine/const/lights/lights';
 import Hardware, { HardwareRequest, HardwareResponse } from '@/engine/entities/Hardware';
 import { filterUndefined } from '@/lib/array/array';
 import { bitTest, clamp } from '@/lib/math/math';
@@ -387,8 +387,8 @@ const fast: Hardware = async (args: HardwareRequest): Promise<HardwareResponse> 
 
 			// Turn off all lights in case any where left
 			updateLights({
-				updates: targetButtons.map((button) => ({
-					id: button.lightId,
+				updates: lights.map((light) => ({
+					id: light.id,
 					redPercent: 0,
 					greenPercent: 0,
 					bluePercent: 0,

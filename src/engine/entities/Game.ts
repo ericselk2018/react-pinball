@@ -6,6 +6,7 @@ import Mode from './Mode';
 import ModeStep from './ModeStep';
 import Player from './Player';
 import Shot from './Shot';
+import Song from './Song';
 
 export declare type Status =
 	| 'starting'
@@ -54,7 +55,8 @@ export default interface Game {
 	startTurn: () => void;
 	startNextGame: () => void;
 	nextPlayer: () => void;
-	song: number;
+	song: Song;
+	readonly secondsSinceSongStarted: number;
 	showingMenu: 'options' | 'game-setup' | 'not-ready-to-start' | undefined;
 	selectedMenuOption: number;
 	volume: number;

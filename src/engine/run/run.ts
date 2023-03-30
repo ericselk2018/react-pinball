@@ -118,7 +118,7 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 	};
 
 	let volume = parseFloat(localStorage.getItem('volume') || '1');
-	let song = 0;
+	let songId = 0;
 	let songAudio: HTMLAudioElement | undefined = undefined;
 
 	const getSongVolume = () => {
@@ -130,14 +130,14 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 			songAudio.pause();
 			songAudio.remove();
 		}
-		songAudio = new Audio(`audio/${songs[song]}.mp3`);
+		songAudio = new Audio(`audio/${songs[songId].name}.mp3`);
 		songAudio.volume = getSongVolume();
 		songAudio.play();
 		songAudio.addEventListener('ended', () => {
-			if (song === songs.length - 1) {
-				song = 0;
+			if (songId === songs.length - 1) {
+				songId = 0;
 			} else {
-				song++;
+				songId++;
 			}
 			playSong();
 		});
@@ -215,16 +215,19 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		pressedButton: undefined,
 		unpressedButton: undefined,
 		get song() {
-			return song;
+			return songs[songId];
 		},
 		set song(value) {
-			song = value;
+			songId = songs.indexOf(value);
 			playSong();
 		},
 		enableOrDisableFlippers,
 		tapCoil,
 		startTurn,
 		showingMenu: undefined,
+		get secondsSinceSongStarted() {
+			return songAudio?.currentTime || 0;
+		},
 		get volume() {
 			return volume;
 		},

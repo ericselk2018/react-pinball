@@ -1,4 +1,3 @@
-import songs from '@/engine/const/songs/songs';
 import Game, { OptionsMenuOption } from '@/engine/entities/Game';
 import Blink from '../blink/blink';
 import * as S from './options.styles';
@@ -61,7 +60,7 @@ const Options = (props: Props) => {
 				<Blink blinking={selectedMenuOption === OptionsMenuOption.lastGame} text="Last Game" />
 			</S.Option>
 			<S.Option>
-				<Blink blinking={selectedMenuOption === OptionsMenuOption.song} text={songs[song]} />
+				<Blink blinking={selectedMenuOption === OptionsMenuOption.song} text={song.name} />
 			</S.Option>
 			<S.Option>
 				<Blink

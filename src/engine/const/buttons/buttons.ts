@@ -1,6 +1,24 @@
 import Button from '@/engine/entities/Button';
 import TargetButton from '@/engine/entities/TargetButton';
 import { buttonId } from '@/lib/id/id';
+import {
+	fourTargetGroupBottomLight,
+	fourTargetGroupFirstFromBottomLight,
+	fourTargetGroupFirstFromTopLight,
+	fourTargetGroupTopLight,
+	leftKickerLight,
+	leftRolloverLight,
+	leftTargetLight,
+	rightKickerLight,
+	rightRolloverLight,
+	threeTargetGroupCenterLight,
+	threeTargetGroupLeftLight,
+	threeTargetGroupRightLight,
+	topKickerLight,
+	topRightKickerLight,
+	topRightTargetLight,
+	topRolloverLight,
+} from '../lights/lights';
 import { cabinetNodeBoard, lowerThirdNodeBoard, upperThirdNodeBoard } from '../node-boards/node-boards';
 import { totalBallsInMachine } from '../setup/setup';
 
@@ -26,7 +44,7 @@ export const leftRolloverButton: TargetButton = {
 	dificulty: 0.7,
 	image: '',
 	videos: [],
-	lightId: 4,
+	light: leftRolloverLight,
 };
 export const rightFlipperEndOfStrokeButton: Button = {
 	id: id(3),
@@ -45,7 +63,7 @@ export const rightRolloverButton: TargetButton = {
 	dificulty: 0.7,
 	image: '',
 	videos: [],
-	lightId: 8,
+	light: rightRolloverLight,
 };
 export const rightKickerButton: TargetButton = {
 	id: id(6),
@@ -54,7 +72,7 @@ export const rightKickerButton: TargetButton = {
 	image: 'images/garage3.jpg',
 	videos: ['videos/garage3.mp4'],
 	dificulty: 0.8,
-	lightId: 9,
+	light: rightKickerLight,
 };
 export const rightBumperButton: Button = { id: id(7), name: 'Right Bumper', dificulty: 0.7 };
 
@@ -65,7 +83,7 @@ export const fourTargetGroupFirstFromBottomButton: TargetButton = {
 	image: 'images/mia.jpg',
 	videos: ['videos/mia1.mp4'],
 	dificulty: 0.5,
-	lightId: 2,
+	light: fourTargetGroupFirstFromBottomLight,
 };
 export const leftBumperButton: Button = { id: id(1), name: 'Left Bumper', dificulty: 0.9 };
 export const fourTargetGroupTopButton: TargetButton = {
@@ -74,7 +92,7 @@ export const fourTargetGroupTopButton: TargetButton = {
 	image: 'images/dom.jpg',
 	videos: ['videos/dom1.mp4'],
 	dificulty: 0.5,
-	lightId: 0,
+	light: fourTargetGroupTopLight,
 };
 export const fourTargetGroupBottomButton: TargetButton = {
 	id: id(3),
@@ -82,7 +100,7 @@ export const fourTargetGroupBottomButton: TargetButton = {
 	image: 'images/letty.jpg',
 	videos: ['videos/letty1.mp4'],
 	dificulty: 0.5,
-	lightId: 3,
+	light: fourTargetGroupBottomLight,
 };
 export const fourTargetGroupFirstFromTopButton: TargetButton = {
 	id: id(4),
@@ -90,7 +108,7 @@ export const fourTargetGroupFirstFromTopButton: TargetButton = {
 	image: 'images/brian.jpg',
 	videos: ['videos/brian1.mp4'],
 	dificulty: 0.5,
-	lightId: 1,
+	light: fourTargetGroupFirstFromTopLight,
 };
 
 // Header 2 on lower third node board is available, not used for anything.
@@ -118,7 +136,7 @@ export const topRightKickerButton: TargetButton = {
 	image: 'images/garage1.jpg',
 	videos: ['videos/domHome1.mp4'],
 	dificulty: 0.9,
-	lightId: 10,
+	light: topRightKickerLight,
 };
 export const topRightTargetButton: TargetButton = {
 	id: id(1),
@@ -126,7 +144,7 @@ export const topRightTargetButton: TargetButton = {
 	image: 'images/garage1.jpg',
 	videos: ['videos/garage1.mp4'],
 	dificulty: 1,
-	lightId: 11,
+	light: topRightTargetLight,
 };
 export const threeTargetGroupRightButton: TargetButton = {
 	id: id(2),
@@ -134,7 +152,7 @@ export const threeTargetGroupRightButton: TargetButton = {
 	image: 'images/charger.jpg',
 	videos: ['videos/charger1.mp4'],
 	dificulty: 0.5,
-	lightId: 12,
+	light: threeTargetGroupRightLight,
 };
 export const threeTargetGroupCenterButton: TargetButton = {
 	id: id(3),
@@ -142,7 +160,7 @@ export const threeTargetGroupCenterButton: TargetButton = {
 	image: 'images/skyline.jpg',
 	videos: ['videos/skyline1.mp4'],
 	dificulty: 0.5,
-	lightId: 13,
+	light: threeTargetGroupCenterLight,
 };
 export const threeTargetGroupLeftButton: TargetButton = {
 	id: id(4),
@@ -150,7 +168,7 @@ export const threeTargetGroupLeftButton: TargetButton = {
 	image: 'images/miacar.jpg',
 	videos: ['videos/miacar.mp4'],
 	dificulty: 0.5,
-	lightId: 14,
+	light: threeTargetGroupLeftLight,
 };
 export const topRolloverButton: TargetButton = {
 	id: id(5),
@@ -159,7 +177,7 @@ export const topRolloverButton: TargetButton = {
 	image: 'images/dom.jpg',
 	videos: ['videos/dom1.mp4'],
 	dificulty: 0.9,
-	lightId: 16,
+	light: topRolloverLight,
 };
 
 id = (pin: number) => buttonId({ board: upperThirdNodeBoard, header: 1, pin });
@@ -170,7 +188,7 @@ export const topKickerButton: TargetButton = {
 	image: 'images/garage4.jpg',
 	videos: ['videos/domHome1.mp4'],
 	dificulty: 0.9,
-	lightId: 15,
+	light: topKickerLight,
 };
 export const leftTargetButton: TargetButton = {
 	id: id(3),
@@ -178,7 +196,7 @@ export const leftTargetButton: TargetButton = {
 	image: 'images/garage4.jpg',
 	videos: ['videos/garage4.mp4'],
 	dificulty: 0.5,
-	lightId: 17,
+	light: leftTargetLight,
 };
 export const leftKickerButton: TargetButton = {
 	id: id(4),
@@ -187,7 +205,7 @@ export const leftKickerButton: TargetButton = {
 	image: 'images/garage2.jpg',
 	videos: ['videos/garage2.mp4'],
 	dificulty: 0.8,
-	lightId: 18,
+	light: leftKickerLight,
 };
 export const middleBumperButton: Button = { id: id(5), name: 'Middle Bumper', dificulty: 0.7 };
 
