@@ -98,4 +98,7 @@ const lights: Light[] = [
 	leftKickerLight,
 ];
 
+// TODO: remove slice once all LEDs are wired -- waiting for out-of-stock .100 crimp connectors
+export const lightsInCounterClockwiseOrder = lights.slice(0, 10);
+
 export default lights;
