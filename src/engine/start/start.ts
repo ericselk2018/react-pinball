@@ -168,6 +168,11 @@ const start = async (args: {
 
 	await disableFlippers();
 
+	// TODO: configure "lights as coils":
+	// Per Brian Madden in Slack:
+	// yes for full power. The various pulse modes are only good for 255ms max. So prob just mode 18 to configure it, and then TL:<driver>,3 to turn it on and TL:<driver>,2 to turn it off
+	// mode 18 is pulse + hold, so you can set pwm1 to 0, and then pwm2 power to FF
+
 	return {
 		enableOrDisableFlippers,
 		tapCoil,
