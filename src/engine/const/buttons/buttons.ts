@@ -46,15 +46,15 @@ export const leftRolloverButton: TargetButton = {
 	videos: [],
 	light: leftRolloverLight,
 };
-export const rightFlipperEndOfStrokeButton: Button = {
-	id: id(3),
-	name: 'Right Flipper End of Stroke',
-	dificulty: 0,
-};
 export const rightSlingshotButton: Button = {
-	id: id(4),
+	id: id(3),
 	name: 'Right Slingshot',
 	dificulty: 0.5,
+};
+export const rightFlipperEndOfStrokeButton: Button = {
+	id: id(4),
+	name: 'Right Flipper End of Stroke',
+	dificulty: 0,
 };
 export const rightRolloverButton: TargetButton = {
 	id: id(5),
@@ -65,34 +65,31 @@ export const rightRolloverButton: TargetButton = {
 	videos: [],
 	light: rightRolloverLight,
 };
-export const rightKickerButton: TargetButton = {
-	id: id(6),
-	name: 'Right Kicker',
-	normallyClosed: true,
-	image: 'images/garage3.jpg',
-	videos: ['videos/garage3.mp4'],
-	dificulty: 0.8,
-	light: rightKickerLight,
-};
-export const rightBumperButton: Button = { id: id(7), name: 'Right Bumper', dificulty: 0.7 };
 
 id = (pin: number) => buttonId({ board: lowerThirdNodeBoard, header: 1, pin });
-export const fourTargetGroupFirstFromBottomButton: TargetButton = {
-	id: id(0),
-	name: '4-Target Group - 1st From Bottom',
-	image: 'images/mia.jpg',
-	videos: ['videos/mia1.mp4'],
-	dificulty: 0.5,
-	light: fourTargetGroupFirstFromBottomLight,
-};
-export const leftBumperButton: Button = { id: id(1), name: 'Left Bumper', dificulty: 0.9 };
 export const fourTargetGroupTopButton: TargetButton = {
-	id: id(2),
+	id: id(0),
 	name: '4-Target Group - Top',
 	image: 'images/dom.jpg',
 	videos: ['videos/dom1.mp4'],
 	dificulty: 0.5,
 	light: fourTargetGroupTopLight,
+};
+export const fourTargetGroupFirstFromTopButton: TargetButton = {
+	id: id(1),
+	name: '4-Target Group - 1st From Top',
+	image: 'images/brian.jpg',
+	videos: ['videos/brian1.mp4'],
+	dificulty: 0.5,
+	light: fourTargetGroupFirstFromTopLight,
+};
+export const fourTargetGroupFirstFromBottomButton: TargetButton = {
+	id: id(2),
+	name: '4-Target Group - 1st From Bottom',
+	image: 'images/mia.jpg',
+	videos: ['videos/mia1.mp4'],
+	dificulty: 0.5,
+	light: fourTargetGroupFirstFromBottomLight,
 };
 export const fourTargetGroupBottomButton: TargetButton = {
 	id: id(3),
@@ -101,14 +98,6 @@ export const fourTargetGroupBottomButton: TargetButton = {
 	videos: ['videos/letty1.mp4'],
 	dificulty: 0.5,
 	light: fourTargetGroupBottomLight,
-};
-export const fourTargetGroupFirstFromTopButton: TargetButton = {
-	id: id(4),
-	name: '4-Target Group - 1st From Top',
-	image: 'images/brian.jpg',
-	videos: ['videos/brian1.mp4'],
-	dificulty: 0.5,
-	light: fourTargetGroupFirstFromTopLight,
 };
 
 // Header 2 on lower third node board is available, not used for anything.
@@ -129,46 +118,34 @@ export const plungerRolloverButton: Button = {
 };
 
 id = (pin: number) => buttonId({ board: upperThirdNodeBoard, header: 0, pin });
-export const topRightKickerButton: TargetButton = {
+export const leftKickerButton: TargetButton = {
 	id: id(0),
-	name: 'Top Right Kicker',
+	name: 'Left Kicker',
 	normallyClosed: true,
-	image: 'images/garage1.jpg',
+	image: 'images/garage2.jpg',
+	videos: ['videos/garage2.mp4'],
+	dificulty: 0.8,
+	light: leftKickerLight,
+};
+export const rightKickerButton: TargetButton = {
+	id: id(1),
+	name: 'Right Kicker',
+	normallyClosed: true,
+	image: 'images/garage3.jpg',
+	videos: ['videos/garage3.mp4'],
+	dificulty: 0.8,
+	light: rightKickerLight,
+};
+export const leftBumperButton: Button = { id: id(2), name: 'Left Bumper', dificulty: 0.9 };
+export const middleBumperButton: Button = { id: id(3), name: 'Middle Bumper', dificulty: 0.7 };
+export const topKickerButton: TargetButton = {
+	id: id(4),
+	name: 'Top Kicker',
+	normallyClosed: true,
+	image: 'images/garage4.jpg',
 	videos: ['videos/domHome1.mp4'],
 	dificulty: 0.9,
-	light: topRightKickerLight,
-};
-export const topRightTargetButton: TargetButton = {
-	id: id(1),
-	name: 'Top Right Target',
-	image: 'images/garage1.jpg',
-	videos: ['videos/garage1.mp4'],
-	dificulty: 1,
-	light: topRightTargetLight,
-};
-export const threeTargetGroupRightButton: TargetButton = {
-	id: id(2),
-	name: '3-Target Group - Right',
-	image: 'images/charger.jpg',
-	videos: ['videos/charger1.mp4'],
-	dificulty: 0.5,
-	light: threeTargetGroupRightLight,
-};
-export const threeTargetGroupCenterButton: TargetButton = {
-	id: id(3),
-	name: '3-Target Group - Center',
-	image: 'images/skyline.jpg',
-	videos: ['videos/skyline1.mp4'],
-	dificulty: 0.5,
-	light: threeTargetGroupCenterLight,
-};
-export const threeTargetGroupLeftButton: TargetButton = {
-	id: id(4),
-	name: '3-Target Group - Left',
-	image: 'images/miacar.jpg',
-	videos: ['videos/miacar.mp4'],
-	dificulty: 0.5,
-	light: threeTargetGroupLeftLight,
+	light: topKickerLight,
 };
 export const topRolloverButton: TargetButton = {
 	id: id(5),
@@ -179,35 +156,58 @@ export const topRolloverButton: TargetButton = {
 	dificulty: 0.9,
 	light: topRolloverLight,
 };
-
-id = (pin: number) => buttonId({ board: upperThirdNodeBoard, header: 1, pin });
-export const topKickerButton: TargetButton = {
-	id: id(0),
-	name: 'Top Kicker',
+export const topRightKickerButton: TargetButton = {
+	id: id(6),
+	name: 'Top Right Kicker',
 	normallyClosed: true,
-	image: 'images/garage4.jpg',
+	image: 'images/garage1.jpg',
 	videos: ['videos/domHome1.mp4'],
 	dificulty: 0.9,
-	light: topKickerLight,
+	light: topRightKickerLight,
 };
+export const rightBumperButton: Button = { id: id(7), name: 'Right Bumper', dificulty: 0.7 };
+
+id = (pin: number) => buttonId({ board: upperThirdNodeBoard, header: 1, pin });
 export const leftTargetButton: TargetButton = {
-	id: id(3),
+	id: id(0),
 	name: 'Left Target',
 	image: 'images/garage4.jpg',
 	videos: ['videos/garage4.mp4'],
 	dificulty: 0.5,
 	light: leftTargetLight,
 };
-export const leftKickerButton: TargetButton = {
-	id: id(4),
-	name: 'Left Kicker',
-	normallyClosed: true,
-	image: 'images/garage2.jpg',
-	videos: ['videos/garage2.mp4'],
-	dificulty: 0.8,
-	light: leftKickerLight,
+export const threeTargetGroupLeftButton: TargetButton = {
+	id: id(1),
+	name: '3-Target Group - Left',
+	image: 'images/miacar.jpg',
+	videos: ['videos/miacar.mp4'],
+	dificulty: 0.5,
+	light: threeTargetGroupLeftLight,
 };
-export const middleBumperButton: Button = { id: id(5), name: 'Middle Bumper', dificulty: 0.7 };
+export const threeTargetGroupCenterButton: TargetButton = {
+	id: id(2),
+	name: '3-Target Group - Center',
+	image: 'images/skyline.jpg',
+	videos: ['videos/skyline1.mp4'],
+	dificulty: 0.5,
+	light: threeTargetGroupCenterLight,
+};
+export const threeTargetGroupRightButton: TargetButton = {
+	id: id(3),
+	name: '3-Target Group - Right',
+	image: 'images/charger.jpg',
+	videos: ['videos/charger1.mp4'],
+	dificulty: 0.5,
+	light: threeTargetGroupRightLight,
+};
+export const topRightTargetButton: TargetButton = {
+	id: id(4),
+	name: 'Top Right Target',
+	image: 'images/garage1.jpg',
+	videos: ['videos/garage1.mp4'],
+	dificulty: 1,
+	light: topRightTargetLight,
+};
 
 id = (pin: number) => buttonId({ board: cabinetNodeBoard, header: 0, pin });
 export const leftFlipperButtonButton: Button = { id: id(0), name: 'Left Flipper Button', dificulty: 0 };
