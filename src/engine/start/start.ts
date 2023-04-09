@@ -140,8 +140,8 @@ const start = async (args: {
 		await configurePulse({
 			coilId: lamp.id,
 			pulsePowerPercent: 1,
-			pulseTimeInMilliseconds: 255,
-			restTimeInMilliseconds: 100,
+			pulseTimeInMilliseconds: 200,
+			restTimeInMilliseconds: 50,
 		});
 	};
 
@@ -163,8 +163,8 @@ const start = async (args: {
 			buttonId: button.id,
 			buttonCondition: !button.normallyClosed,
 			pulsePowerPercent: 1,
-			pulseTimeInMilliseconds: 255,
-			restTimeInMilliseconds: 100,
+			pulseTimeInMilliseconds: 150,
+			restTimeInMilliseconds: 50,
 		});
 	};
 

@@ -64,11 +64,11 @@ export const topKickerLight: Light = {
 	id: 15,
 };
 
-export const topRolloverLight: Light = {
+export const leftTargetLight: Light = {
 	id: 16,
 };
 
-export const leftTargetLight: Light = {
+export const topRolloverLight: Light = {
 	id: 17,
 };
 

@@ -156,17 +156,12 @@ const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 			endLightShow();
 		}
 
-		// REFACTOR: Share conditions with rules they are based on.
-		const waitingToStartNextGame = game.status === 'gameOver' && !game.showingMenu;
-		const waitingForNewGame =
-			game.status === 'readyToPlay' && game.showingMenu === 'game-setup' && game.creditsNeeded <= 0;
-		const waitingForNextPlayer = game.status === 'waitingForNextPlayer' && !game.showingMenu;
-		const flashStartButton = waitingToStartNextGame || waitingForNewGame || waitingForNextPlayer;
-		if (flashStartButton) {
+		const flashStartButton = game.status !== 'waitingForLaunch' && game.status !== 'playing';
+		if (flashStartButton && !startBlinkInterval) {
 			const blink = async () => {
 				game.tapCoil({ coil: startButtonLamp });
 			};
-			startBlinkInterval = window.setInterval(blink, 1000);
+			startBlinkInterval = window.setInterval(blink, 600);
 		} else if (startBlinkInterval) {
 			clearInterval(startBlinkInterval);
 			startBlinkInterval = undefined;
