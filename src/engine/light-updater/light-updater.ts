@@ -1,8 +1,11 @@
 import { targetButtons } from '../const/buttons/buttons';
+import { startButtonLamp } from '../const/coils/coils';
+import lights from '../const/lights/lights';
 import Game from '../entities/Game';
 import Song from '../entities/Song';
 import lightShow from '../light-show/light-show';
 
+let startBlinkInterval: number | undefined = undefined;
 let blinkInterval: number | undefined = undefined;
 let blinkOn = false;
 let currentLightShow: { abortController: AbortController; song: Song } | undefined = undefined;
@@ -107,12 +110,30 @@ const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 			}
 		}
 
+		const endLightShow = () => {
+			if (currentLightShow) {
+				currentLightShow.abortController.abort();
+				currentLightShow = undefined;
+
+				// Turn off all lights when show ends, so we have clean state for whatever is next.
+				const fadeDurationInMilliseconds = 100;
+				game.updateLights({
+					updates: lights.map((light) => ({
+						id: light.id,
+						redPercent: 0,
+						greenPercent: 0,
+						bluePercent: 0,
+						fadeDurationInMilliseconds,
+					})),
+				});
+			}
+		};
+
 		// Play light show for current song while not playing.
 		if (game.status === 'gameOver' || game.status === 'starting' || game.status === 'readyToPlay') {
 			// If song changes we need to stop current light show.
 			if (currentLightShow && currentLightShow.song !== game.song) {
-				currentLightShow.abortController.abort();
-				currentLightShow = undefined;
+				endLightShow();
 			}
 
 			if (!currentLightShow) {
@@ -132,8 +153,23 @@ const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 				});
 			}
 		} else if (currentLightShow) {
-			currentLightShow.abortController.abort();
-			currentLightShow = undefined;
+			endLightShow();
+		}
+
+		// REFACTOR: Share conditions with rules they are based on.
+		const waitingToStartNextGame = game.status === 'gameOver' && !game.showingMenu;
+		const waitingForNewGame =
+			game.status === 'readyToPlay' && game.showingMenu === 'game-setup' && game.creditsNeeded <= 0;
+		const waitingForNextPlayer = game.status === 'waitingForNextPlayer' && !game.showingMenu;
+		const flashStartButton = waitingToStartNextGame || waitingForNewGame || waitingForNextPlayer;
+		if (flashStartButton) {
+			const blink = async () => {
+				game.tapCoil({ coil: startButtonLamp });
+			};
+			startBlinkInterval = window.setInterval(blink, 1000);
+		} else if (startBlinkInterval) {
+			clearInterval(startBlinkInterval);
+			startBlinkInterval = undefined;
 		}
 	};
 

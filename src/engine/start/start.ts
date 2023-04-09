@@ -1,6 +1,6 @@
 import { bumpers } from '../const/bumpers/bumpers';
 import buttons from '../const/buttons/buttons';
-import { troughBallEjectCoil } from '../const/coils/coils';
+import { selectButtonLamp, startButtonLamp, troughBallEjectCoil } from '../const/coils/coils';
 import flippers, { FlipperInfo } from '../const/flippers/flippers';
 import { kickers } from '../const/kickers/kickers';
 import { slingshots } from '../const/slingshots/slingshots';
@@ -134,9 +134,20 @@ const start = async (args: {
 		});
 	};
 
+	const configureLamp = async (args: { lamp: Coil }) => {
+		const { lamp } = args;
+
+		await configurePulse({
+			coilId: lamp.id,
+			pulsePowerPercent: 1,
+			pulseTimeInMilliseconds: 255,
+			restTimeInMilliseconds: 100,
+		});
+	};
+
 	const configureBumper = async (args: { bumper: Bumper }) => {
 		const { bumper } = args;
-		const { coil, button } = bumper;
+		const { coil, button, lamp } = bumper;
 
 		await configurePulse({
 			coilId: coil.id,
@@ -145,6 +156,15 @@ const start = async (args: {
 			pulsePowerPercent: 1,
 			pulseTimeInMilliseconds: 30,
 			restTimeInMilliseconds: 90,
+		});
+
+		await configurePulse({
+			coilId: lamp.id,
+			buttonId: button.id,
+			buttonCondition: !button.normallyClosed,
+			pulsePowerPercent: 1,
+			pulseTimeInMilliseconds: 255,
+			restTimeInMilliseconds: 100,
 		});
 	};
 
@@ -165,6 +185,10 @@ const start = async (args: {
 	}
 
 	await configureManualCoil({ coil: troughBallEjectCoil });
+
+	for (const lamp of [startButtonLamp, selectButtonLamp]) {
+		await configureLamp({ lamp });
+	}
 
 	await disableFlippers();
 
