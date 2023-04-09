@@ -17,7 +17,7 @@ export const lifeAintAGameSong: Song = {
 };
 
 export const rollinSong: Song = {
-	name: 'Rolling',
+	name: 'Rollin',
 	lightShow: debonaireLightShow,
 };
 
