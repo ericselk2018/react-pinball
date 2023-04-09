@@ -101,6 +101,7 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 			player.ballsTotal = startingBallsPerPlayer;
 			player.score = 0;
 		});
+		game.currentPlayer = players[0];
 		log('next game started');
 	};
 
