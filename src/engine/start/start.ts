@@ -128,9 +128,9 @@ const start = async (args: {
 
 		await configurePulse({
 			coilId: coil.id,
-			pulsePowerPercent: 0.8,
-			pulseTimeInMilliseconds: 90,
-			restTimeInMilliseconds: 90,
+			pulsePowerPercent: 0.9,
+			pulseTimeInMilliseconds: 120,
+			restTimeInMilliseconds: 120,
 		});
 	};
 
