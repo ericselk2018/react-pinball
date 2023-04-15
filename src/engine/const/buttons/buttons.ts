@@ -66,42 +66,42 @@ export const rightRolloverButton: TargetButton = {
 	light: rightRolloverLight,
 };
 
-id = (pin: number) => buttonId({ board: lowerThirdNodeBoard, header: 1, pin });
-export const fourTargetGroupTopButton: TargetButton = {
-	id: id(0),
-	name: '4-Target Group - Top',
-	image: 'images/dom.jpg',
-	videos: ['videos/dom1.mp4'],
-	dificulty: 0.5,
-	light: fourTargetGroupTopLight,
-};
-export const fourTargetGroupFirstFromTopButton: TargetButton = {
-	id: id(1),
-	name: '4-Target Group - 1st From Top',
-	image: 'images/brian.jpg',
-	videos: ['videos/brian1.mp4'],
-	dificulty: 0.5,
-	light: fourTargetGroupFirstFromTopLight,
-};
-export const fourTargetGroupFirstFromBottomButton: TargetButton = {
-	id: id(2),
-	name: '4-Target Group - 1st From Bottom',
-	image: 'images/mia.jpg',
-	videos: ['videos/mia1.mp4'],
-	dificulty: 0.5,
-	light: fourTargetGroupFirstFromBottomLight,
-};
+// Header 1 on lower third node board is available, not used for anything.
+// id = (pin: number) => buttonId({ board: lowerThirdNodeBoard, header: 1, pin });
+
+id = (pin: number) => buttonId({ board: lowerThirdNodeBoard, header: 2, pin });
 export const fourTargetGroupBottomButton: TargetButton = {
-	id: id(3),
+	id: id(0),
 	name: '4-Target Group - Bottom',
 	image: 'images/letty.jpg',
 	videos: ['videos/letty1.mp4'],
 	dificulty: 0.5,
 	light: fourTargetGroupBottomLight,
 };
-
-// Header 2 on lower third node board is available, not used for anything.
-// id = (pin: number) => buttonId({ board: lowerThirdNodeBoard, header: 2, pin });
+export const fourTargetGroupFirstFromBottomButton: TargetButton = {
+	id: id(1),
+	name: '4-Target Group - 1st From Bottom',
+	image: 'images/mia.jpg',
+	videos: ['videos/mia1.mp4'],
+	dificulty: 0.5,
+	light: fourTargetGroupFirstFromBottomLight,
+};
+export const fourTargetGroupFirstFromTopButton: TargetButton = {
+	id: id(2),
+	name: '4-Target Group - 1st From Top',
+	image: 'images/brian.jpg',
+	videos: ['videos/brian1.mp4'],
+	dificulty: 0.5,
+	light: fourTargetGroupFirstFromTopLight,
+};
+export const fourTargetGroupTopButton: TargetButton = {
+	id: id(3),
+	name: '4-Target Group - Top',
+	image: 'images/dom.jpg',
+	videos: ['videos/dom1.mp4'],
+	dificulty: 0.5,
+	light: fourTargetGroupTopLight,
+};
 
 id = (pin: number) => buttonId({ board: lowerThirdNodeBoard, header: 3, pin });
 export const troughJamButton: Button = { id: id(0), name: 'Trough Jam', normallyClosed: true, dificulty: 0 };
@@ -168,21 +168,21 @@ export const topRightKickerButton: TargetButton = {
 export const rightBumperButton: Button = { id: id(7), name: 'Right Bumper', dificulty: 0.7 };
 
 id = (pin: number) => buttonId({ board: upperThirdNodeBoard, header: 1, pin });
-export const leftTargetButton: TargetButton = {
+export const topRightTargetButton: TargetButton = {
 	id: id(0),
-	name: 'Left Target',
-	image: 'images/garage4.jpg',
-	videos: ['videos/garage4.mp4'],
-	dificulty: 0.5,
-	light: leftTargetLight,
+	name: 'Top Right Target',
+	image: 'images/garage1.jpg',
+	videos: ['videos/garage1.mp4'],
+	dificulty: 1,
+	light: topRightTargetLight,
 };
-export const threeTargetGroupLeftButton: TargetButton = {
+export const threeTargetGroupRightButton: TargetButton = {
 	id: id(1),
-	name: '3-Target Group - Left',
-	image: 'images/miacar.jpg',
-	videos: ['videos/miacar.mp4'],
+	name: '3-Target Group - Right',
+	image: 'images/charger.jpg',
+	videos: ['videos/charger1.mp4'],
 	dificulty: 0.5,
-	light: threeTargetGroupLeftLight,
+	light: threeTargetGroupRightLight,
 };
 export const threeTargetGroupCenterButton: TargetButton = {
 	id: id(2),
@@ -192,21 +192,21 @@ export const threeTargetGroupCenterButton: TargetButton = {
 	dificulty: 0.5,
 	light: threeTargetGroupCenterLight,
 };
-export const threeTargetGroupRightButton: TargetButton = {
+export const threeTargetGroupLeftButton: TargetButton = {
 	id: id(3),
-	name: '3-Target Group - Right',
-	image: 'images/charger.jpg',
-	videos: ['videos/charger1.mp4'],
+	name: '3-Target Group - Left',
+	image: 'images/miacar.jpg',
+	videos: ['videos/miacar.mp4'],
 	dificulty: 0.5,
-	light: threeTargetGroupRightLight,
+	light: threeTargetGroupLeftLight,
 };
-export const topRightTargetButton: TargetButton = {
+export const leftTargetButton: TargetButton = {
 	id: id(4),
-	name: 'Top Right Target',
-	image: 'images/garage1.jpg',
-	videos: ['videos/garage1.mp4'],
-	dificulty: 1,
-	light: topRightTargetLight,
+	name: 'Left Target',
+	image: 'images/garage4.jpg',
+	videos: ['videos/garage4.mp4'],
+	dificulty: 0.5,
+	light: leftTargetLight,
 };
 
 id = (pin: number) => buttonId({ board: cabinetNodeBoard, header: 0, pin });
