@@ -37,7 +37,7 @@ const GameStatus = (props: Props) => {
 					return (
 						index + 11 > shots.length && (
 							<S.Shot key={index} styleNumber={index % 3}>
-								+{points.toLocaleString()} {name}
+								+{points.toLocaleString()} {name || 'points'}
 							</S.Shot>
 						)
 					);
