@@ -1,5 +1,6 @@
 import Button from './Button';
 import Coil from './Coil';
+import ComboShot from './ComboShot';
 import HighScore from './HighScore';
 import Kicker from './Kicker';
 import Mode from './Mode';
@@ -47,6 +48,7 @@ export default interface Game {
 	pressedButtons: Button[];
 	pressedButton: Button | undefined;
 	unpressedButton: Button | undefined;
+	comboShotTracker: { shot: ComboShot; hits: Button[] }[];
 	buttonsPressedThisTurn: Button[];
 	modeStepButtonsHitThisTurn: Button[];
 	kickersWithBalls: Kicker[];

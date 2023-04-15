@@ -1,7 +1,7 @@
 import Rule from '@/engine/entities/Rule';
 
 // Mark button as pressed in the current turn.
-const buttonPressed: Rule = ({ game }) => {
+const buttonPressedThisTurn: Rule = ({ game }) => {
 	const { status, pressedButton, buttonsPressedThisTurn, log } = game;
 
 	if (status !== 'playing' || !pressedButton) {
@@ -14,4 +14,4 @@ const buttonPressed: Rule = ({ game }) => {
 	}
 };
 
-export default buttonPressed;
+export default buttonPressedThisTurn;

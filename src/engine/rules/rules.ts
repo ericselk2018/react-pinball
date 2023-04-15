@@ -1,7 +1,8 @@
 import Rule from '../entities/Rule';
 import addCredit from './add-credit/add-credit';
 import awardPoints from './award-points/award-points';
-import buttonPressed from './button-pressed-this-turn/button-pressed-this-turn';
+import awardShots from './award-shots/award-shots';
+import buttonPressedThisTurn from './button-pressed-this-turn/button-pressed-this-turn';
 import changeNumberOfPlayers from './change-number-of-players/change-number-of-players';
 import changePlayerInitials from './change-player-initials/change-player-initials';
 import clearKickersOnStart from './clear-kickers-on-start/clear-kickers-on-start';
@@ -47,7 +48,8 @@ const rules: Rule[] = [
 	modeSelect,
 	kickOrHoldBall,
 	modeStepHit,
-	buttonPressed,
+	buttonPressedThisTurn,
+	awardShots,
 	awardPoints,
 	removeBallFromKicker,
 	drainBall,

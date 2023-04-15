@@ -38,6 +38,7 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		const { log } = game;
 		game.turnStartTimeInMilliseconds = Date.now();
 		game.buttonsPressedThisTurn.length = 0;
+		game.comboShotTracker.length = 0;
 		game.modeStepButtonsHitThisTurn.length = 0;
 		log('started next turn');
 	};
@@ -114,6 +115,7 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 			game.currentPlayer = players[currentPlayerIndex + 1];
 		}
 		game.buttonsPressedThisTurn.length = 0;
+		game.comboShotTracker.length = 0;
 		game.modeStepButtonsHitThisTurn.length = 0;
 		log(`player changed to ${game.currentPlayer.initials}`);
 	};
@@ -195,6 +197,7 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 			return getCurrentModeStep();
 		},
 		currentMode: modes[0],
+		comboShotTracker: [],
 		buttonsPressedThisTurn: [],
 		modeStepButtonsHitThisTurn: [],
 		turnStartTimeInMilliseconds: 0,
