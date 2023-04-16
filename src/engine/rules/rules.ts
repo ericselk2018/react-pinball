@@ -18,6 +18,7 @@ import modeSelect from './mode-select/mode-select';
 import modeStepHit from './mode-step-hit/mode-step-hit';
 import playOnStart from './play-on-start/play-on-start';
 import readyToPlay from './ready-to-play/ready-to-play';
+import reloadOnBeginTestButton from './reload-on-begin-test-button/reload-on-begin-test-button';
 import removeBallFromKicker from './remove-ball-from-kicker/remove-ball-from-kicker';
 import selectGameSetupOption from './select-game-setup-option/select-game-setup-option';
 import selectLights from './select-lights/select-lights';
@@ -67,6 +68,7 @@ const rules: Rule[] = [
 	hideOptions,
 	selectGameSetupOption,
 	hideNotReadyToStart,
+	reloadOnBeginTestButton,
 ];
 
 export default rules;
