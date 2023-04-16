@@ -23,7 +23,13 @@ const ejectNextBall: Rule = ({ game }) => {
 			currentPlayer.ballsUsed++;
 		}
 		game.ballsInPlay++;
-		tapCoil({ coil: troughBallEjectCoil });
+		setTimeout(() => {
+			// Delay added to allow ball that just drained to roll down the trough some.
+			// Otherwise when trough coil pulses, it may shake things enough that the
+			// ball coming down the trough causes the switch to hit again making us
+			// think the ball drained again.
+			tapCoil({ coil: troughBallEjectCoil });
+		}, 1000);
 		log(
 			`ejected next ball, now ${game.ballsInPlay} ball(s) in play and ${currentPlayer.ballsUsed} ball(s) used for ${currentPlayer.initials}`
 		);
