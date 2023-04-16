@@ -1,6 +1,6 @@
 import { targetButtons } from '../const/buttons/buttons';
 import { startButtonLamp } from '../const/coils/coils';
-import { blue, green, off, red, yellow } from '../const/colors/colors';
+import { blue, green, off, red, purple } from '../const/colors/colors';
 import lights from '../const/lights/lights';
 import Button from '../entities/Button';
 import Game from '../entities/Game';
@@ -76,7 +76,7 @@ const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 			if (game.modeStepButtonsHitThisTurn.includes(button)) {
 				return green;
 			}
-			return yellow;
+			return purple;
 		};
 
 		// If the current mode step changes, we need to update blinking lights.
