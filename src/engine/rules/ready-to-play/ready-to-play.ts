@@ -1,4 +1,4 @@
-import { usedTroughButtons } from '@/engine/const/buttons/buttons';
+import { startButtonButton, usedTroughButtons } from '@/engine/const/buttons/buttons';
 import Rule from '@/engine/entities/Rule';
 
 // Transition from starting to read-to-play when buttons are in required state:
@@ -12,7 +12,8 @@ const readyToPlay: Rule = ({ game }) => {
 	}
 
 	const problemButtons = pressedButtons.filter(
-		(button) => !usedTroughButtons.some((troughButton) => troughButton.id === button.id)
+		(button) =>
+			button !== startButtonButton && !usedTroughButtons.some((troughButton) => troughButton.id === button.id)
 	);
 	if (problemButtons.length) {
 		game.error = `Button should not be pressed: ${problemButtons[0].name}`;

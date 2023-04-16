@@ -2,6 +2,7 @@ import buttons from '../const/buttons/buttons';
 import modes from '../const/modes/modes';
 import { creditsPerPlayer, initialsLength, maxPlayers, startingBallsPerPlayer } from '../const/setup/setup';
 import songs from '../const/songs/songs';
+import soundEffects from '../const/sound-effects/sound-effects';
 import Game, { OptionsMenuOption, SelectedGameSetupMenuOption, Status } from '../entities/Game';
 import Hardware from '../entities/Hardware';
 import HighScore from '../entities/HighScore';
@@ -148,6 +149,13 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		});
 	};
 
+	const playSoundEffect = (args: { soundEffect: keyof typeof soundEffects }) => {
+		const { soundEffect } = args;
+		const audio = new Audio(`audio/${soundEffect}.mp3`);
+		audio.volume = volume;
+		audio.play();
+	};
+
 	const addPlayer = () => {
 		const { players } = game;
 		if (players.length < maxPlayers) {
@@ -183,9 +191,16 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		});
 	};
 
+	let isFreePlay = false;
 	let status: Status = 'starting';
 	const history: string[] = [];
 	const game: Game = {
+		get isFreePlay() {
+			return isFreePlay;
+		},
+		set isFreePlay(value) {
+			isFreePlay = value;
+		},
 		selectedMenuOption: SelectedGameSetupMenuOption.numberOfPlayers,
 		nextPlayer,
 		startNextGame,
@@ -257,6 +272,7 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		highScores,
 		endGame,
 		updateLights,
+		playSoundEffect,
 	};
 
 	let inactiveTimeout: number | undefined = undefined;

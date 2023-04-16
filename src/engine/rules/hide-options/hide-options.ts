@@ -2,9 +2,9 @@ import { startButtonButton } from '@/engine/const/buttons/buttons';
 import Rule from '@/engine/entities/Rule';
 
 const hideOptions: Rule = ({ game }) => {
-	const { showingMenu, pressedButton } = game;
+	const { showingMenu, unpressedButton } = game;
 	if (showingMenu === 'options') {
-		if (pressedButton?.id === startButtonButton.id) {
+		if (unpressedButton?.id === startButtonButton.id) {
 			game.showingMenu = undefined;
 		}
 	}

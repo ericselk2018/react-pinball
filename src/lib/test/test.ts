@@ -4,6 +4,7 @@ import Game from '@/engine/entities/Game';
 import LightShow from '@/engine/entities/LightShow';
 
 export const testGame: Game = {
+	isFreePlay: false,
 	comboShotTracker: [],
 	status: 'starting',
 	ballsInPlay: 0,
@@ -46,6 +47,7 @@ export const testGame: Game = {
 	endGame: jest.fn(),
 	updateLights: jest.fn(),
 	secondsSinceSongStarted: 0,
+	playSoundEffect: jest.fn(),
 };
 
 export const testLightShow: LightShow = {

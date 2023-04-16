@@ -1,3 +1,4 @@
+import soundEffects from '../const/sound-effects/sound-effects';
 import Button from './Button';
 import Coil from './Coil';
 import ComboShot from './ComboShot';
@@ -34,7 +35,8 @@ export const OptionsMenuOption = {
 export const maxOptionsMenuOption = OptionsMenuOption.lights;
 
 export default interface Game {
-	log: (message: string) => void;
+	isFreePlay: boolean;
+	readonly log: (message: string) => void;
 	history: string[];
 	currentMode: Mode;
 	readonly currentModeStep: ModeStep | undefined;
@@ -52,11 +54,11 @@ export default interface Game {
 	buttonsPressedThisTurn: Button[];
 	modeStepButtonsHitThisTurn: Button[];
 	kickersWithBalls: Kicker[];
-	enableOrDisableFlippers: (args: { enable: boolean }) => void;
-	tapCoil: (args: { coil: Coil }) => void;
-	startTurn: () => void;
-	startNextGame: () => void;
-	nextPlayer: () => void;
+	readonly enableOrDisableFlippers: (args: { enable: boolean }) => void;
+	readonly tapCoil: (args: { coil: Coil }) => void;
+	readonly startTurn: () => void;
+	readonly startNextGame: () => void;
+	readonly nextPlayer: () => void;
 	song: Song;
 	readonly secondsSinceSongStarted: number;
 	showingMenu: 'options' | 'game-setup' | 'not-ready-to-start' | undefined;
@@ -64,8 +66,8 @@ export default interface Game {
 	volume: number;
 	showingMenuDetails: boolean;
 	lights: 'on' | 'dim' | 'off';
-	addPlayer: () => void;
-	endGame: () => void;
+	readonly addPlayer: () => void;
+	readonly endGame: () => void;
 	readonly creditsRequired: number;
 	readonly creditsNeeded: number;
 	readonly shots: Shot[];
@@ -79,4 +81,5 @@ export default interface Game {
 			fadeDurationInMilliseconds: number;
 		}[];
 	}) => void;
+	readonly playSoundEffect: (args: { soundEffect: keyof typeof soundEffects }) => void;
 }

@@ -2,13 +2,13 @@ import { startButtonButton } from '@/engine/const/buttons/buttons';
 import Rule from '@/engine/entities/Rule';
 
 const startNextGame: Rule = ({ game }) => {
-	const { status, log, pressedButton, startNextGame, showingMenu } = game;
+	const { status, log, unpressedButton, startNextGame, showingMenu } = game;
 
 	if (status !== 'gameOver' || showingMenu) {
 		return;
 	}
 
-	if (pressedButton?.id === startButtonButton.id) {
+	if (unpressedButton?.id === startButtonButton.id) {
 		game.status = 'starting';
 		log('starting next game');
 		startNextGame();

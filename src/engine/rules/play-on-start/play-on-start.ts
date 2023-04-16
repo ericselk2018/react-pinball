@@ -4,10 +4,20 @@ import Rule from '@/engine/entities/Rule';
 
 // Transition from ready-to-play or waiting-for-next-player to playing when start button is pressed.
 const playOnStart: Rule = ({ game }) => {
-	const { pressedButtons, status, pressedButton, tapCoil, log, showingMenu, creditsNeeded } = game;
+	const {
+		pressedButtons,
+		status,
+		unpressedButton,
+		tapCoil,
+		log,
+		showingMenu,
+		creditsNeeded,
+		playSoundEffect,
+		startTurn,
+	} = game;
 
 	const pressedStartWithBallReadyToEject =
-		pressedButton?.id === startButtonButton.id &&
+		unpressedButton?.id === startButtonButton.id &&
 		pressedButtons.some((pressedButton) => pressedButton.id === troughBallOneButton.id);
 	if (!pressedStartWithBallReadyToEject) {
 		return;
@@ -21,17 +31,19 @@ const playOnStart: Rule = ({ game }) => {
 
 	if (newGame) {
 		if (creditsNeeded > 0) {
+			playSoundEffect({ soundEffect: 'Too Soon Junior' });
 			return;
 		}
 		game.credits -= game.creditsRequired;
 	}
 
+	game.isFreePlay = false;
 	game.status = 'playing';
 	game.showingMenu = undefined;
 	tapCoil({ coil: troughBallEjectCoil });
 	game.ballsInPlay++;
 	game.currentPlayer.ballsUsed++;
-	game.startTurn();
+	startTurn();
 	log('started play');
 };
 

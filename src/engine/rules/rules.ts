@@ -28,6 +28,7 @@ import setVolume from './set-volume/set-volume';
 import showGameSetup from './show-game-setup/show-game-setup';
 import showNotReadyToStart from './show-not-ready-to-start/show-not-ready-to-start';
 import showOptions from './show-options/show-options';
+import startFreePlay from './start-free-play/start-free-play';
 import startNextGame from './start-next-game/start-next-game';
 import toggleHighScores from './toggle-high-scores/toggle-high-scores';
 import toggleLastGame from './toggle-last-game/toggle-last-game';
@@ -43,6 +44,7 @@ const rules: Rule[] = [
 	readyToPlay,
 	clearKickersOnStart,
 	playOnStart,
+	startFreePlay,
 	showNotReadyToStart,
 	showGameSetup,
 	waitingForLaunch,
