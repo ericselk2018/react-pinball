@@ -1,6 +1,6 @@
 import { targetButtons } from '../const/buttons/buttons';
 import { startButtonLamp } from '../const/coils/coils';
-import { blue, green, off, red, purple } from '../const/colors/colors';
+import { blue, off, purple, brightRed, brightGreen } from '../const/colors/colors';
 import lights from '../const/lights/lights';
 import Button from '../entities/Button';
 import Game from '../entities/Game';
@@ -15,6 +15,7 @@ let currentLightShow: { abortController: AbortController; song: Song } | undefin
 const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 	const { status: previousStatus, currentModeStep } = previousGame;
 	const previousModeStepName = currentModeStep?.name;
+	const previousKickersWithBallsLength = previousGame.kickersWithBalls.length;
 
 	const previousmModeStepTargetButtons = previousGame.currentModeStep?.buttons.filter(
 		(button) =>
@@ -71,16 +72,22 @@ const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 
 		const getColorForButton = (button: Button) => {
 			if (game.kickersWithBalls.some((kicker) => kicker.button === button)) {
-				return red;
+				return brightRed;
 			}
 			if (game.modeStepButtonsHitThisTurn.includes(button)) {
-				return green;
+				return brightGreen;
 			}
 			return purple;
 		};
 
 		// If the current mode step changes, we need to update blinking lights.
-		if (game.currentModeStep?.name !== previousModeStepName || game.status !== previousStatus) {
+		// We also need to update if status changes.
+		// We also need to update if kickers in balls changes.
+		if (
+			game.currentModeStep?.name !== previousModeStepName ||
+			game.status !== previousStatus ||
+			game.kickersWithBalls.length !== previousKickersWithBallsLength
+		) {
 			// We always reset the blink interval so that the first blink will happen at a consistent time.
 			if (blinkInterval !== undefined) {
 				clearInterval(blinkInterval);
