@@ -1,6 +1,8 @@
 import { targetButtons } from '../const/buttons/buttons';
 import { startButtonLamp } from '../const/coils/coils';
+import { blue, green, off, red, yellow } from '../const/colors/colors';
 import lights from '../const/lights/lights';
+import Button from '../entities/Button';
 import Game from '../entities/Game';
 import Song from '../entities/Song';
 import lightShow from '../light-show/light-show';
@@ -67,6 +69,16 @@ const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 			endLightShow();
 		}
 
+		const getColorForButton = (button: Button) => {
+			if (game.kickersWithBalls.some((kicker) => kicker.button === button)) {
+				return red;
+			}
+			if (game.modeStepButtonsHitThisTurn.includes(button)) {
+				return green;
+			}
+			return yellow;
+		};
+
 		// If the current mode step changes, we need to update blinking lights.
 		if (game.currentModeStep?.name !== previousModeStepName || game.status !== previousStatus) {
 			// We always reset the blink interval so that the first blink will happen at a consistent time.
@@ -81,13 +93,13 @@ const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 			if (previousmModeStepTargetButtons?.length) {
 				game.updateLights({
 					updates: previousmModeStepTargetButtons.map((button) => {
-						const colorPercent = game.buttonsPressedThisTurn.some((b) => b.id === button.id) ? 1 : 0;
+						const color = game.buttonsPressedThisTurn.some((b) => b.id === button.id)
+							? getColorForButton(button)
+							: off;
 						const fadeDurationInMilliseconds = 100;
 						return {
 							id: button.light.id,
-							redPercent: colorPercent,
-							greenPercent: colorPercent,
-							bluePercent: colorPercent,
+							...color,
 							fadeDurationInMilliseconds,
 						};
 					}),
@@ -104,14 +116,11 @@ const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 				const fadeDurationInMilliseconds = 500;
 
 				const blink = async () => {
-					const colorPercent = blinkOn ? 1 : 0;
 					blinkOn = !blinkOn;
 					game.updateLights({
 						updates: modeStepTargetButtons.map((button) => ({
 							id: button.light.id,
-							redPercent: colorPercent,
-							greenPercent: colorPercent,
-							bluePercent: colorPercent,
+							...(blinkOn ? blue : off),
 							fadeDurationInMilliseconds,
 						})),
 					});
@@ -131,9 +140,7 @@ const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 				updates: [
 					{
 						id: pressedTargetButton.light.id,
-						redPercent: 1,
-						greenPercent: 1,
-						bluePercent: 1,
+						...getColorForButton(pressedTargetButton),
 						fadeDurationInMilliseconds,
 					},
 				],
