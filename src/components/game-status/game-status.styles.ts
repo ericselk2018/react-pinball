@@ -52,7 +52,7 @@ export const Shots = styled.div`
 export const Shot = styled.div(
 	({ styleNumber }: { styleNumber: number }) => `
 	position: absolute;
-	left: 0;
+	left: ${styleNumber === 0 ? '0' : styleNumber === 1 ? '400' : '-400'};
 	right: 0;
 	bottom: 0;
 	animation: slide-up 2s forwards;
