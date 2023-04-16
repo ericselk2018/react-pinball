@@ -68,7 +68,7 @@ const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 		}
 
 		// If the current mode step changes, we need to update blinking lights.
-		if (game.currentModeStep?.name !== previousModeStepName) {
+		if (game.currentModeStep?.name !== previousModeStepName || game.status !== previousStatus) {
 			// We always reset the blink interval so that the first blink will happen at a consistent time.
 			if (blinkInterval !== undefined) {
 				clearInterval(blinkInterval);
