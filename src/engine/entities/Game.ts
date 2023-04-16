@@ -82,6 +82,8 @@ export default interface Game {
 			fadeDurationInMilliseconds: number;
 		}[];
 	}) => void;
-	readonly playSoundEffect: (args: { soundEffect: keyof typeof soundEffects }) => void;
+	readonly playSoundEffect: (
+		args: { soundEffect: keyof typeof soundEffects } | { soundEffects: (keyof typeof soundEffects)[] }
+	) => void;
 	readonly update: (args: { updater: (args: { game: Game }) => void }) => void;
 }

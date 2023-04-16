@@ -77,6 +77,7 @@ export const fourTargetGroupBottomButton: TargetButton = {
 	videos: ['videos/letty1.mp4'],
 	dificulty: 0.5,
 	light: fourTargetGroupBottomLight,
+	soundEffects: ['letty1', 'letty2'],
 };
 export const fourTargetGroupFirstFromBottomButton: TargetButton = {
 	id: id(1),
@@ -85,6 +86,7 @@ export const fourTargetGroupFirstFromBottomButton: TargetButton = {
 	videos: ['videos/mia1.mp4'],
 	dificulty: 0.5,
 	light: fourTargetGroupFirstFromBottomLight,
+	soundEffects: ['mia1', 'mia2'],
 };
 export const fourTargetGroupFirstFromTopButton: TargetButton = {
 	id: id(2),
@@ -93,6 +95,7 @@ export const fourTargetGroupFirstFromTopButton: TargetButton = {
 	videos: ['videos/brian1.mp4'],
 	dificulty: 0.5,
 	light: fourTargetGroupFirstFromTopLight,
+	soundEffects: ['brian1', 'brian2'],
 };
 export const fourTargetGroupTopButton: TargetButton = {
 	id: id(3),
@@ -101,6 +104,7 @@ export const fourTargetGroupTopButton: TargetButton = {
 	videos: ['videos/dom1.mp4'],
 	dificulty: 0.5,
 	light: fourTargetGroupTopLight,
+	soundEffects: ['dom1', 'dom2'],
 };
 
 id = (pin: number) => buttonId({ board: lowerThirdNodeBoard, header: 3, pin });
@@ -183,6 +187,7 @@ export const threeTargetGroupRightButton: TargetButton = {
 	videos: ['videos/charger1.mp4'],
 	dificulty: 0.5,
 	light: threeTargetGroupRightLight,
+	soundEffects: ['car1'],
 };
 export const threeTargetGroupCenterButton: TargetButton = {
 	id: id(2),
@@ -191,6 +196,7 @@ export const threeTargetGroupCenterButton: TargetButton = {
 	videos: ['videos/skyline1.mp4'],
 	dificulty: 0.5,
 	light: threeTargetGroupCenterLight,
+	soundEffects: ['car1'],
 };
 export const threeTargetGroupLeftButton: TargetButton = {
 	id: id(3),
@@ -199,6 +205,7 @@ export const threeTargetGroupLeftButton: TargetButton = {
 	videos: ['videos/miacar.mp4'],
 	dificulty: 0.5,
 	light: threeTargetGroupLeftLight,
+	soundEffects: ['car1'],
 };
 export const leftTargetButton: TargetButton = {
 	id: id(4),

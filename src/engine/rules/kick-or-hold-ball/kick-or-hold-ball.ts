@@ -4,7 +4,16 @@ import Rule from '@/engine/entities/Rule';
 
 // Decides if balls should be kicked or held when a ball enters a kicker.
 const kickOrHoldBall: Rule = ({ game }) => {
-	const { status, pressedButton, kickersWithBalls, currentModeStep, tapCoil, modeStepButtonsHitThisTurn, log } = game;
+	const {
+		status,
+		pressedButton,
+		kickersWithBalls,
+		currentModeStep,
+		tapCoil,
+		modeStepButtonsHitThisTurn,
+		log,
+		playSoundEffect,
+	} = game;
 
 	const kicker = kickers.find((kicker) => kicker.button.id === pressedButton?.id);
 	if (!kicker) {
@@ -14,6 +23,7 @@ const kickOrHoldBall: Rule = ({ game }) => {
 	if (status !== 'playing' || !currentModeStep?.buttons.some((button) => button.id === kicker.button.id)) {
 		tapCoil({ coil: kicker.coil });
 		log(`rejected ball from entering kicker ${kicker.button.name}`);
+		playSoundEffect({ soundEffects: ['reject1', 'reject2', 'reject3', 'reject4'] });
 		return;
 	}
 

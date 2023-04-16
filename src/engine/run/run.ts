@@ -1,3 +1,4 @@
+import { getRandomInt } from '@/lib/math/math';
 import buttons from '../const/buttons/buttons';
 import modes from '../const/modes/modes';
 import { creditsPerPlayer, initialsLength, maxPlayers, startingBallsPerPlayer } from '../const/setup/setup';
@@ -149,8 +150,17 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		});
 	};
 
-	const playSoundEffect = (args: { soundEffect: keyof typeof soundEffects }) => {
-		const { soundEffect } = args;
+	const playSoundEffect = (
+		args: { soundEffect: keyof typeof soundEffects } | { soundEffects: (keyof typeof soundEffects)[] }
+	) => {
+		const soundEffect = (() => {
+			if ('soundEffects' in args) {
+				const { soundEffects } = args;
+				return soundEffects[getRandomInt({ min: 0, max: soundEffects.length - 1 })];
+			} else {
+				return args.soundEffect;
+			}
+		})();
 		const audio = new Audio(`audio/${soundEffect}.mp3`);
 		audio.volume = volume;
 		audio.play();
