@@ -4,6 +4,7 @@ import Game from '@/engine/entities/Game';
 import LightShow from '@/engine/entities/LightShow';
 
 export const testGame: Game = {
+	comboShotTracker: [],
 	status: 'starting',
 	ballsInPlay: 0,
 	buttonsPressedThisTurn: [],
