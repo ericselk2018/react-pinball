@@ -21,6 +21,52 @@ const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 	);
 
 	const update = ({ game }: { game: Game }) => {
+		const endLightShow = () => {
+			if (currentLightShow) {
+				currentLightShow.abortController.abort();
+				currentLightShow = undefined;
+
+				// Turn off all lights when show ends, so we have clean state for whatever is next.
+				const fadeDurationInMilliseconds = 100;
+				game.updateLights({
+					updates: lights.map((light) => ({
+						id: light.id,
+						redPercent: 0,
+						greenPercent: 0,
+						bluePercent: 0,
+						fadeDurationInMilliseconds,
+					})),
+				});
+			}
+		};
+
+		// Play light show for current song while not playing.
+		if (game.status === 'gameOver' || game.status === 'starting' || game.status === 'readyToPlay') {
+			// If song changes we need to stop current light show.
+			if (currentLightShow && currentLightShow.song !== game.song) {
+				endLightShow();
+			}
+
+			if (!currentLightShow) {
+				currentLightShow = {
+					abortController: new AbortController(),
+					song: game.song,
+				};
+
+				// Start time is based on start of song, so that light show is in sync with song (if the show itself was designed well).
+				// PLAY-TEST: It might look funny if a show doesn't always start at the beginning, in which case we may need to restart
+				//  the song when the light show starts, instead of starting the light show at a time that matches the already playing song.
+				lightShow({
+					game,
+					show: currentLightShow.song.lightShow,
+					abortSignal: currentLightShow.abortController.signal,
+					startTimeInMilliseconds: game.secondsSinceSongStarted * 1000,
+				});
+			}
+		} else if (currentLightShow) {
+			endLightShow();
+		}
+
 		// If the current mode step changes, we need to update blinking lights.
 		if (game.currentModeStep?.name !== previousModeStepName) {
 			// We always reset the blink interval so that the first blink will happen at a consistent time.
@@ -110,59 +156,13 @@ const lightUpdater = ({ game: previousGame }: { game: Game }) => {
 			}
 		}
 
-		const endLightShow = () => {
-			if (currentLightShow) {
-				currentLightShow.abortController.abort();
-				currentLightShow = undefined;
-
-				// Turn off all lights when show ends, so we have clean state for whatever is next.
-				const fadeDurationInMilliseconds = 100;
-				game.updateLights({
-					updates: lights.map((light) => ({
-						id: light.id,
-						redPercent: 0,
-						greenPercent: 0,
-						bluePercent: 0,
-						fadeDurationInMilliseconds,
-					})),
-				});
-			}
-		};
-
-		// Play light show for current song while not playing.
-		if (game.status === 'gameOver' || game.status === 'starting' || game.status === 'readyToPlay') {
-			// If song changes we need to stop current light show.
-			if (currentLightShow && currentLightShow.song !== game.song) {
-				endLightShow();
-			}
-
-			if (!currentLightShow) {
-				currentLightShow = {
-					abortController: new AbortController(),
-					song: game.song,
-				};
-
-				// Start time is based on start of song, so that light show is in sync with song (if the show itself was designed well).
-				// PLAY-TEST: It might look funny if a show doesn't always start at the beginning, in which case we may need to restart
-				//  the song when the light show starts, instead of starting the light show at a time that matches the already playing song.
-				lightShow({
-					game,
-					show: currentLightShow.song.lightShow,
-					abortSignal: currentLightShow.abortController.signal,
-					startTimeInMilliseconds: game.secondsSinceSongStarted * 1000,
-				});
-			}
-		} else if (currentLightShow) {
-			endLightShow();
-		}
-
 		const flashStartButton = game.status !== 'waitingForLaunch' && game.status !== 'playing';
 		if (flashStartButton && !startBlinkInterval) {
 			const blink = async () => {
 				game.tapCoil({ coil: startButtonLamp });
 			};
 			startBlinkInterval = window.setInterval(blink, 600);
-		} else if (startBlinkInterval) {
+		} else if (!flashStartButton && startBlinkInterval) {
 			clearInterval(startBlinkInterval);
 			startBlinkInterval = undefined;
 		}
