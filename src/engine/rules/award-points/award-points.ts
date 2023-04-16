@@ -9,8 +9,10 @@ const awardPoints: Rule = ({ game }) => {
 	}
 
 	const points = pressedButton.dificulty * pointsPerButtonHit;
-	currentPlayer.score += points;
-	shots.push({ name: '', points });
+	if (points) {
+		currentPlayer.score += points;
+		shots.push({ name: '', points });
+	}
 };
 
 export default awardPoints;
