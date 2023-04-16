@@ -214,7 +214,7 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 			}
 		},
 		error: '',
-		credits: 100,
+		credits: 0,
 		players: [player1, player2],
 		currentPlayer: player1,
 		pressedButtons: [],
