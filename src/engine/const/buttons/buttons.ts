@@ -230,7 +230,7 @@ export const carButtons: ReadonlyArray<TargetButton> = [
 	threeTargetGroupCenterButton,
 	threeTargetGroupLeftButton,
 ];
-export const truckButtons: ReadonlyArray<TargetButton> = [topRightTargetButton];
+export const truckButtons: ReadonlyArray<TargetButton> = [topRightTargetButton, leftTargetButton];
 export const stuntButtons: ReadonlyArray<TargetButton> = [topRolloverButton];
 export const kickerButtons: ReadonlyArray<TargetButton> = [
 	leftKickerButton,
