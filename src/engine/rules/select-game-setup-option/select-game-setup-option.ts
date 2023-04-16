@@ -4,7 +4,7 @@ import { minGameSetupMenuOption } from '@/engine/entities/Game';
 import Rule from '@/engine/entities/Rule';
 
 const selectGameSetupOption: Rule = ({ game }) => {
-	const { players, status, pressedButton, selectedMenuOption, log, showingMenu } = game;
+	const { players, status, unpressedButton, selectedMenuOption, log, showingMenu } = game;
 
 	if (status === 'playing' || status === 'waitingForLaunch' || status === 'waitingForNextPlayer') {
 		return;
@@ -14,7 +14,7 @@ const selectGameSetupOption: Rule = ({ game }) => {
 		return;
 	}
 
-	if (pressedButton?.id === selectButtonButton.id) {
+	if (unpressedButton?.id === selectButtonButton.id) {
 		const maxSelected = players.length * initialsLength - 1;
 		if (selectedMenuOption === maxSelected) {
 			game.selectedMenuOption = minGameSetupMenuOption;

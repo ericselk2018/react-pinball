@@ -154,6 +154,7 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		const audio = new Audio(`audio/${soundEffect}.mp3`);
 		audio.volume = volume;
 		audio.play();
+		history.push(`played sound effect: ${soundEffect}`);
 	};
 
 	const addPlayer = () => {
@@ -191,10 +192,24 @@ const run = async (args: { hardware: Hardware; onUpdate: (args: { game: Game }) 
 		});
 	};
 
+	const update = (args: { updater: (args: { game: Game }) => void }) => {
+		const { updater } = args;
+		updater({ game });
+		runRules();
+	};
+
+	let debug = false;
 	let isFreePlay = false;
 	let status: Status = 'starting';
 	const history: string[] = [];
 	const game: Game = {
+		update,
+		get debug() {
+			return debug;
+		},
+		set debug(value) {
+			debug = value;
+		},
 		get isFreePlay() {
 			return isFreePlay;
 		},

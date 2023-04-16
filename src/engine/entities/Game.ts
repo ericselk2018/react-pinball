@@ -35,6 +35,7 @@ export const OptionsMenuOption = {
 export const maxOptionsMenuOption = OptionsMenuOption.lights;
 
 export default interface Game {
+	debug: boolean;
 	isFreePlay: boolean;
 	readonly log: (message: string) => void;
 	history: string[];
@@ -82,4 +83,5 @@ export default interface Game {
 		}[];
 	}) => void;
 	readonly playSoundEffect: (args: { soundEffect: keyof typeof soundEffects }) => void;
+	readonly update: (args: { updater: (args: { game: Game }) => void }) => void;
 }

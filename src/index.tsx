@@ -7,6 +7,7 @@ import fast, { requestPorts } from './engine/hardware/fast/fast';
 import keyboard from './engine/hardware/keyboard/keyboard';
 import run from './engine/run/run';
 import * as S from './index.styles';
+import Debug from './components/debug/debug';
 
 declare const global: {
 	production: boolean;
@@ -40,8 +41,10 @@ const App = () => {
 	}, [game]);
 
 	if (game) {
-		const { status } = game;
-		if (status === 'playing' || status === 'waitingForLaunch' || status === 'waitingForNextPlayer') {
+		const { status, debug } = game;
+		if (debug) {
+			return <Debug game={game} />;
+		} else if (status === 'playing' || status === 'waitingForLaunch' || status === 'waitingForNextPlayer') {
 			return <Playing game={game} />;
 		} else {
 			return <NotPlaying game={game} />;

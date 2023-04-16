@@ -4,6 +4,8 @@ import Game from '@/engine/entities/Game';
 import LightShow from '@/engine/entities/LightShow';
 
 export const testGame: Game = {
+	update: jest.fn(),
+	debug: false,
 	isFreePlay: false,
 	comboShotTracker: [],
 	status: 'starting',

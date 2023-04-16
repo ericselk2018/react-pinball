@@ -30,6 +30,7 @@ import showNotReadyToStart from './show-not-ready-to-start/show-not-ready-to-sta
 import showOptions from './show-options/show-options';
 import startFreePlay from './start-free-play/start-free-play';
 import startNextGame from './start-next-game/start-next-game';
+import toggleDebug from './toggle-debug/toggle-debug';
 import toggleHighScores from './toggle-high-scores/toggle-high-scores';
 import toggleLastGame from './toggle-last-game/toggle-last-game';
 import waitingForLaunch from './waiting-for-launch/waiting-for-launch';
@@ -45,6 +46,7 @@ const rules: Rule[] = [
 	clearKickersOnStart,
 	playOnStart,
 	startFreePlay,
+	toggleDebug,
 	showNotReadyToStart,
 	showGameSetup,
 	waitingForLaunch,
